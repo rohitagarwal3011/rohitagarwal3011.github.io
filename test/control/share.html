@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+    <title>A-Frame Mouse Cursor Component - Basic</title>
+
+    <script src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/aframe-0.7.1.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+    <script src="aframe-ar.js"></script>
+
+    <link rel="stylesheet" href="css/style1.css">
+
+  </head>
+  <body onload="init();">
+
+    <a-scene cursor="fuse: false; rayOrigin: mouse" embedded="true" width="100%" height="100%">
+      <a-assets>
+      </a-assets>
+      <a-anchor hit-testing-enabled='false' preset='custom' type='pattern' url='logo-ar.patt' >
+        <a-entity id="myscene">
+        <a-box id="cube" position="1 0 0" color="red" scale="0.1 0.1 0.1" rotation="0 0 0"  visible="true"></a-box>
+        <a-box id="cube1" position="0 0 0" color="skyblue" scale="0.1 0.1 0.1" rotation="0 0 0"  visible="true"></a-box>
+        </a-entity>
+      </a-anchor>
+      <a-camera-static/>
+
+    </a-scene>
+
+<div id="container">
+    <button id="btn-zoom-in" class="button" onclick="zoomIn();">+</button>
+    <button id="btn-zoom-out" class="button" onclick="zoomOut();">-</button>
+    <button id="btn-up" class="button" onclick="moveUp(1);" ></button>
+    <button id="btn-down" class="button" onclick="moveDown(1);" ></button>
+    <button id="btn-left" class="button" onclick="moveLeft(1);" ></button>
+    <button id="btn-right" class="button" onclick="moveRight(1);" ></button>
+
+    <button id="btn-up2" class="button" onclick="moveUp(2);" ></button>
+    <button id="btn-down2" class="button" onclick="moveDown(2);" ></button>
+    <button id="btn-left2" class="button" onclick="moveLeft(2);" ></button>
+    <button id="btn-right2" class="button" onclick="moveRight(2);" ></button>
+
+    <button id="btn-jump"  onclick="jump();"><span>Jump</span></button>
+    <button id="btn-rotate-left" class="button" onmousedown="continuosRotateLeft();" ontouchstart="continuosRotateLeft();" onmouseup="continuosRotateLeftStop();" ontouchend="continuosRotateLeftStop();"></button>
+    <button id="btn-rotate-right" class="button" onmousedown="continuosRotateRight();" ontouchstart="continuosRotateRight();" onmouseup="continuosRotateRightStop();" ontouchend="continuosRotateRightStop();"></button>
+</div>
+
+  </body>
+
+  <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+  <script>
+
+  var config = {
+    apiKey: "AIzaSyADqTypd0Umt1IOgznCVuHAagecdNXm6do",
+    authDomain: "firepush-d066d.firebaseapp.com",
+    databaseURL: "https://firepush-d066d.firebaseio.com",
+    projectId: "firepush-d066d",
+    storageBucket: "firepush-d066d.appspot.com",
+    messagingSenderId: "820501614455"
+  };
+  firebase.initializeApp(config);
+
+  var dbLeftRef = firebase.database().ref().child('x1');
+  var dbUpRef = firebase.database().ref().child('y1');
+  var dbLeftRef2 = firebase.database().ref().child('x2');
+  var dbUpRef2 = firebase.database().ref().child('y2');
+
+  function init(){
+    firebase.database().ref().child('x1').set(0.01);
+    firebase.database().ref().child('y1').set(0);
+    firebase.database().ref().child('x2').set(-0.01);
+    firebase.database().ref().child('y2').set(0);
+
+  }
+
+
+  dbLeftRef.on('value',snap => {
+    var marginLeft =  snap.val();
+    i = marginLeft;
+    cube.object3D.position.x = marginLeft;
+
+  });
+
+  dbUpRef.on('value',snap => {
+    var marginDown =  snap.val();
+    j = marginDown;
+    cube.object3D.position.z = marginDown;
+
+  });
+
+  dbLeftRef2.on('value',snap => {
+    var marginLeft =  snap.val();
+    k = marginLeft;
+    cube1.object3D.position.x = marginLeft;
+  });
+
+  dbUpRef2.on('value',snap => {
+    var marginDown =  snap.val();
+    l = marginDown;
+    cube1.object3D.position.z = marginDown;
+  });
+
+  function moveRight(p){
+    console.log(p);
+    if(p==1){
+      i+=0.05;
+      firebase.database().ref().child('x1').set(i);
+    }else{
+      k+=0.05;
+      firebase.database().ref().child('x2').set(k);
+    }
+
+  }
+
+  function moveLeft(p){
+    if(p==1){
+      i-=0.05;
+      firebase.database().ref().child('x1').set(i);
+    }else{
+      k-=0.05;
+      firebase.database().ref().child('x2').set(k);
+    }
+
+  }
+
+  function moveUp(p){
+    if(p==1){
+      j+=0.05;
+      firebase.database().ref().child('y1').set(j);
+    }else{
+      l+=0.05;
+      firebase.database().ref().child('y2').set(l);
+    }
+
+  }
+
+  function moveDown(p){
+    if(p==1){
+      j-=0.05;
+      firebase.database().ref().child('y1').set(j);
+    }else{
+      l-=0.05;
+      firebase.database().ref().child('y2').set(l);
+    }
+
+  }
+
+
+  function myFunction() {
+    var START_POS = 0;
+    var speed = 0.5;
+    var GRAVITY = -0.3;
+
+    var pos = START_POS;
+
+    cube.object3D.position.y = START_POS;
+
+    var jumpTimer = setInterval(function(){
+
+      pos += speed;
+      speed += GRAVITY;
+
+      cube.object3D.position.y = pos;
+
+      if (cube.object3D.position.y < 0){
+
+        cube.object3D.position.y = START_POS;
+        clearInterval(jumpTimer);
+      }
+    }, 100);
+  }
+
+  function zoomIn(){
+      console.log("ZoomIn");
+      myscene.object3D.scale.x += 0.5;
+      myscene.object3D.scale.y += 0.5;
+      myscene.object3D.scale.z += 0.5;
+  }
+
+
+  function zoomOut(){
+      console.log("ZoomOut");
+    myscene.object3D.scale.x -= 0.5;
+    myscene.object3D.scale.y -= 0.5;
+    myscene.object3D.scale.z -= 0.5;
+  }
+
+
+  var moveUpInterval;
+  function continuosMoveUp(){
+    moveUpInterval = setInterval(function() {
+      cube.object3D.position.z -= 0.005;
+    },10);
+  }
+
+  function continuosMoveUpStop(){
+    clearInterval(moveUpInterval);
+  }
+
+  var moveDownInterval;
+  function continuosMoveDown(){
+    moveDownInterval = setInterval(function() {
+      cube.object3D.position.z += 0.005;
+    },10);
+  }
+
+  function continuosMoveDownStop(){
+    clearInterval(moveDownInterval);
+  }
+
+
+  var moveLeftInterval;
+  function continuosMoveLeft(){
+    moveLeftInterval = setInterval(function() {
+      cube.object3D.position.x -= 0.005;
+    },10);
+  }
+
+  function continuosMoveLeftStop(){
+    clearInterval(moveLeftInterval);
+  }
+
+  var moveRightInterval;
+  function continuosMoveRight(){
+    moveRightInterval = setInterval(function() {
+      cube.object3D.position.x += 0.005;
+    },10);
+  }
+
+  function continuosMoveRightStop(){
+    clearInterval(moveRightInterval);
+  }
+
+  function jump() {
+    var START_POS = 0;
+    var speed = 0.5;
+    var GRAVITY = -0.3;
+
+    var pos = START_POS;
+
+    cube.object3D.position.y = START_POS;
+
+    var jumpTimer = setInterval(function(){
+
+      pos += speed;
+      speed += GRAVITY;
+
+      cube.object3D.position.y = pos;
+
+      if (cube.object3D.position.y < 0){
+
+        cube.object3D.position.y = START_POS;
+        clearInterval(jumpTimer);
+      }
+    }, 100);
+  }
+
+
+  var rotateLeftInterval;
+  function continuosRotateLeft(){
+    rotateLeftInterval = setInterval(function() {
+      cube.object3D.rotation.y += 0.1;
+    },10);
+  }
+
+  function continuosRotateLeftStop(){
+    clearInterval(rotateLeftInterval);
+  }
+
+  var rotateRightInterval;
+  function continuosRotateRight(){
+    rotateRightInterval = setInterval(function() {
+      cube.object3D.rotation.y -= 0.1;
+    },10);
+  }
+
+  function continuosRotateRightStop(){
+    clearInterval(rotateRightInterval);
+  }
+
+  </script>
+</html>

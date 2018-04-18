@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body onLoad="init();">
+
+    <h1 id="bigOne"></h1>
+    <input id="input" type="text" />
+    <p>Player 1</p>
+    <button id="r1" onclick="moveRight(1);"> Right</button>
+    <button id="l1" onclick="moveLeft(1);">Left</button>
+    <button id="u1" onclick="moveUp(1);"> Up</button>
+    <button id="d1" onclick="moveDown(1);">Down</button>
+    <p>Player 2</p>
+    <button id="r2" onclick="moveRight(2);"> Right</button>
+    <button id="l2" onclick="moveLeft(2);">Left</button>
+    <button id="u2" onclick="moveUp(2);"> Up</button>
+    <button id="d2" onclick="moveDown(2);">Down</button>
+
+
+    <div id='box' style="background-color:red;width:20px;height:20px;position:absolute;"></div>
+    <div id='box2' style="background-color:blue;width:20px;height:20px;position:absolute;"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var i = 0;
+      var j = 0;
+      var k = 0;
+      var l = 0;
+      var config = {
+        apiKey: "AIzaSyADqTypd0Umt1IOgznCVuHAagecdNXm6do",
+        authDomain: "firepush-d066d.firebaseapp.com",
+        databaseURL: "https://firepush-d066d.firebaseio.com",
+        projectId: "firepush-d066d",
+        storageBucket: "firepush-d066d.appspot.com",
+        messagingSenderId: "820501614455"
+      };
+      firebase.initializeApp(config);
+
+      var h1 = document.getElementById('bigOne');
+      var dbLeftRef = firebase.database().ref().child('left');
+      var dbUpRef = firebase.database().ref().child('up');
+
+      var dbLeftRef2 = firebase.database().ref().child('left2');
+      var dbUpRef2 = firebase.database().ref().child('up2');
+
+
+      dbLeftRef.on('value',snap => {
+        var box = document.getElementById('box');
+        var marginLeft =  snap.val();
+        i = marginLeft;
+        box.style.marginLeft = marginLeft + 'px';
+
+        checkWin();
+      });
+
+      dbUpRef.on('value',snap => {
+        console.log("Up1");
+        var box = document.getElementById('box');
+        var marginDown =  snap.val();
+        j = marginDown;
+        box.style.marginTop = marginDown + 'px';
+
+        checkWin();
+      });
+
+      dbLeftRef2.on('value',snap => {
+        var box = document.getElementById('box2');
+        var marginLeft =  snap.val();
+        k = marginLeft;
+        box.style.marginLeft = marginLeft + 'px';
+
+        checkWin();
+      });
+
+      dbUpRef2.on('value',snap => {
+        console.log("Up2");
+        var box = document.getElementById('box2');
+        var marginDown =  snap.val();
+        l = marginDown;
+        box.style.marginTop = marginDown + 'px';
+
+        checkWin();
+      });
+
+      function init(){
+        firebase.database().ref().child('up').set(0);
+        firebase.database().ref().child('left').set(0);
+        firebase.database().ref().child('up2').set(0);
+        firebase.database().ref().child('left2').set(800);
+
+      }
+
+      var moveLeftInterval1;
+      var moveLeftInterval1;
+      var moveUpInterval1;
+      var moveUpInterval2;
+      var moveDownInterval1;
+      var moveDownInterval2;
+      var moveRightInterval1;
+      var moveRightInterval2;
+
+      function moveRight(p){
+        console.log(p);
+        if(p==1){
+          i+=20;
+          firebase.database().ref().child('left').set(i);
+        }else{
+          k+=20;
+          firebase.database().ref().child('left2').set(k);
+        }
+
+      }
+
+      function moveLeft(p){
+        if(p==1){
+          i-=20;
+          firebase.database().ref().child('left').set(i);
+        }else{
+          k-=20;
+          firebase.database().ref().child('left2').set(k);
+        }
+
+      }
+
+      function moveUp(p){
+        if(p==1){
+          j-=20;
+          firebase.database().ref().child('up').set(j);
+        }else{
+          l-=20;
+          firebase.database().ref().child('up2').set(l);
+        }
+
+      }
+
+      function moveDown(p){
+        if(p==1){
+          j+=20;
+          firebase.database().ref().child('up').set(j);
+        }else{
+          l+=20;
+          firebase.database().ref().child('up2').set(l);
+        }
+
+      }
+
+      function checkWin(){
+        var winText = document.getElementById('bigOne');
+        if(i==k){
+          if(Math.abs(j-l) < 20){
+            winText.innerText = 'Game Over';
+            disable();
+          }else{
+            winText.innerText = 'Play';
+            enable();
+          }
+        }else if(j==l){
+          if(Math.abs(i-k) < 20){
+            winText.innerText = 'Game Over';
+            disable();
+          }else{
+            winText.innerText = 'Play';
+            enable();
+          }
+        }else{
+          if((Math.abs(i-k) < 20) && (Math.abs(j-l) < 20)){
+              winText.innerText = 'Game Over';
+              disable()
+          }else{
+            winText.innerText = 'Play';
+            enable();
+          }
+
+        }
+
+      }
+
+      var r1 = document.getElementById('r1');
+      var l1 = document.getElementById('l1');
+      var u1 = document.getElementById('u1');
+      var d1 = document.getElementById('d1');
+
+      var r2 = document.getElementById('r2');
+      var l2 = document.getElementById('l2');
+      var u2 = document.getElementById('u2');
+      var d2 = document.getElementById('d2');
+
+      function disable(){
+
+
+        r1.disabled = true;
+        l1.disabled = true;
+        u1.disabled = true;
+        d1.disabled = true;
+
+        r2.disabled = true;
+        l2.disabled = true;
+        u2.disabled = true;
+        d2.disabled = true;
+
+      }
+
+      function enable(){
+        r1.disabled = false;
+        l1.disabled = false;
+        u1.disabled = false;
+        d1.disabled = false;
+
+        r2.disabled = false;
+        l2.disabled = false;
+        u2.disabled = false;
+        d2.disabled = false;
+      }
+
+    </script>
+
+  </body>
+
+
+</html>

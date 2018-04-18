@@ -1,0 +1,1573 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Your Project!</title>
+    <meta name="description" content="Hello, WebVR! - A-Frame">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+	<meta HTTP-EQUIV="Expires" CONTENT="-1">
+    <script src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/aframe-0.7.1.min.js"></script>
+    <script src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/aframe-environments.min.js"></script>
+	<script src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/aframe-collision.js"></script>
+	<link rel="shortcut icon" href="/favicon.png">
+	<script>
+		AFRAME.registerComponent('start', {
+		  init: function () {
+				var jsObjectError=0;
+var cursor=document.querySelector('#cursor');
+
+        cursor.getX=function(){return cursor.object3D.matrixWorld.elements[12];
+};
+
+        cursor.getY=function(){return cursor.object3D.matrixWorld.elements[13];
+};
+
+        cursor.getZ=function(){return cursor.object3D.matrixWorld.elements[14];
+};
+
+        var camera = document.querySelector('#camera');
+
+        camera.getX= function(){return  camera.object3D.position.x;
+};
+
+        camera.getY= function(){return camera.object3D.position.y;
+};
+
+        camera.getZ=function(){return camera.object3D.position.z;
+};
+
+        var scene=document.querySelector('#scene');
+
+        var plane1=document.querySelector('#plane1');
+
+        plane1.getRotationX=function(){return plane1.object3D.rotation.x;
+};
+
+        plane1.getRotationY=function(){return plane1.object3D.rotation.y;
+};
+
+        plane1.getRotationZ=function(){return plane1.object3D.rotation.z;
+};
+
+        plane1.setRotationX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+plane1.object3D.rotation.x=x;
+};
+plane1.setRotationY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+plane1.object3D.rotation.y=y;
+};
+plane1.setRotationZ=function(z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+plane1.object3D.rotation.z=z;
+};
+plane1.getScaleX=function(){return plane1.object3D.scale.x;
+};
+plane1.getScaleY=function(){return plane1.object3D.scale.y;
+};
+plane1.getScaleZ=function(){return plane1.object3D.scale.z;
+};
+plane1.setScaleX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+plane1.object3D.scale.x=x;
+};
+plane1.setScaleY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+plane1.object3D.scale.y=y;
+};
+plane1.setScaleZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+plane1.object3D.scale.z=z;
+};
+plane1.getVisibility=function(){return plane1.object3D.visible;
+};
+plane1.setVisibility=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+plane1.object3D.visible=value;
+};
+plane1.getColor=function(){return plane1.attributes.color.value;
+};
+plane1.setColor=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+plane1.setAttribute('color',value);
+};
+plane1.moveTo=function(x,y,z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+}if(arguments.length==3){plane1.object3D.position.set(x,y,z);
+}else if(arguments.length==1){plane1.object3D.position.set(x.object3D.position.x,x.object3D.position.y,x.object3D.position.z);
+}};
+plane1.getX=function(){return plane1.object3D.position.x;
+};
+plane1.getY=function(){return plane1.object3D.position.y;
+};
+plane1.getZ=function(){return plane1.object3D.position.z;
+};
+plane1.setX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+plane1.object3D.position.x=x;
+};
+plane1.setY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+plane1.object3D.position.y=y;
+};
+plane1.setZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+plane1.object3D.position.z=z;
+};
+plane1.collisionWith=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+plane1.setAttribute('aabb-collider','objects: .collidable');
+plane1.attributes['aabb-collider'].value='objects: .collidable';
+value.setAttribute('class','collidable');
+};
+plane1.moveTowards=function(targetObj,spd){if(typeof targetObj=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+var direction=new THREE.Vector3();
+var plane1_movSpeedX,plane1_movSpeedY,plane1_movSpeedZ;
+if(spd<0||spd==0){plane1_movSpeedX=0;
+plane1_movSpeedY=0;
+plane1_movSpeedZ=0;
+}else{if(spd>100||spd==100){spd=95;
+};
+plane1_movSpeedX=((targetObj.object3D.position.x-plane1.object3D.position.x)/Math.sqrt(Math.pow(targetObj.object3D.position.x-plane1.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-plane1.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-plane1.object3D.position.z,2)))/(100-spd);
+plane1_movSpeedY=((targetObj.object3D.position.y-plane1.object3D.position.y)/Math.sqrt(Math.pow(targetObj.object3D.position.x-plane1.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-plane1.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-plane1.object3D.position.z,2)))/(100-spd);
+plane1_movSpeedZ=((targetObj.object3D.position.z-plane1.object3D.position.z)/Math.sqrt(Math.pow(targetObj.object3D.position.x-plane1.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-plane1.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-plane1.object3D.position.z,2)))/(100-spd);
+};
+direction.x=plane1.object3D.position.x;
+direction.y=plane1.object3D.position.y;
+direction.z=plane1.object3D.position.z;
+direction.x+=plane1_movSpeedX;
+direction.y+=plane1_movSpeedY;
+direction.z+=plane1_movSpeedZ;
+plane1.object3D.position.set(direction.x,direction.y,direction.z);
+};
+plane1.moveInDirection=function(directionVec,spd){if(typeof directionVec=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+if(spd==0||spd<0){spd=1;
+}else if(spd>20||spd==20){spd=19;
+};
+var dircnX=directionVec.x;
+var dircnY=directionVec.y;
+var dircnZ=directionVec.z;
+plane1.object3D.position.x-=dircnX/(20-spd);
+plane1.object3D.position.y-=dircnY/(20-spd);
+plane1.object3D.position.z-=dircnZ/(20-spd);
+};
+var sky=document.querySelector('#sky');
+sky.getRotationX=function(){return sky.object3D.rotation.x;
+};
+sky.getRotationY=function(){return sky.object3D.rotation.y;
+};
+sky.getRotationZ=function(){return sky.object3D.rotation.z;
+};
+sky.setRotationX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+sky.object3D.rotation.x=x;
+};
+sky.setRotationY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+sky.object3D.rotation.y=y;
+};
+sky.setRotationZ=function(z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+sky.object3D.rotation.z=z;
+};
+sky.getScaleX=function(){return sky.object3D.scale.x;
+};
+sky.getScaleY=function(){return sky.object3D.scale.y;
+};
+sky.getScaleZ=function(){return sky.object3D.scale.z;
+};
+sky.setScaleX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+sky.object3D.scale.x=x;
+};
+sky.setScaleY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+sky.object3D.scale.y=y;
+};
+sky.setScaleZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+sky.object3D.scale.z=z;
+};
+sky.getVisibility=function(){return sky.object3D.visible;
+};
+sky.setVisibility=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+sky.object3D.visible=value;
+};
+sky.getColor=function(){return sky.attributes.color.value;
+};
+sky.setColor=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+sky.setAttribute('color',value);
+};
+sky.moveTo=function(x,y,z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+}if(arguments.length==3){sky.object3D.position.set(x,y,z);
+}else if(arguments.length==1){sky.object3D.position.set(x.object3D.position.x,x.object3D.position.y,x.object3D.position.z);
+}};
+sky.getX=function(){return sky.object3D.position.x;
+};
+sky.getY=function(){return sky.object3D.position.y;
+};
+sky.getZ=function(){return sky.object3D.position.z;
+};
+sky.setX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+sky.object3D.position.x=x;
+};
+sky.setY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+sky.object3D.position.y=y;
+};
+sky.setZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+sky.object3D.position.z=z;
+};
+sky.collisionWith=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+sky.setAttribute('aabb-collider','objects: .collidable');
+sky.attributes['aabb-collider'].value='objects: .collidable';
+value.setAttribute('class','collidable');
+};
+sky.moveTowards=function(targetObj,spd){if(typeof targetObj=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+var direction=new THREE.Vector3();
+var sky_movSpeedX,sky_movSpeedY,sky_movSpeedZ;
+if(spd<0||spd==0){sky_movSpeedX=0;
+sky_movSpeedY=0;
+sky_movSpeedZ=0;
+}else{if(spd>100||spd==100){spd=95;
+};
+sky_movSpeedX=((targetObj.object3D.position.x-sky.object3D.position.x)/Math.sqrt(Math.pow(targetObj.object3D.position.x-sky.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-sky.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-sky.object3D.position.z,2)))/(100-spd);
+sky_movSpeedY=((targetObj.object3D.position.y-sky.object3D.position.y)/Math.sqrt(Math.pow(targetObj.object3D.position.x-sky.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-sky.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-sky.object3D.position.z,2)))/(100-spd);
+sky_movSpeedZ=((targetObj.object3D.position.z-sky.object3D.position.z)/Math.sqrt(Math.pow(targetObj.object3D.position.x-sky.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-sky.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-sky.object3D.position.z,2)))/(100-spd);
+};
+direction.x=sky.object3D.position.x;
+direction.y=sky.object3D.position.y;
+direction.z=sky.object3D.position.z;
+direction.x+=sky_movSpeedX;
+direction.y+=sky_movSpeedY;
+direction.z+=sky_movSpeedZ;
+sky.object3D.position.set(direction.x,direction.y,direction.z);
+};
+sky.moveInDirection=function(directionVec,spd){if(typeof directionVec=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+if(spd==0||spd<0){spd=1;
+}else if(spd>20||spd==20){spd=19;
+};
+var dircnX=directionVec.x;
+var dircnY=directionVec.y;
+var dircnZ=directionVec.z;
+sky.object3D.position.x-=dircnX/(20-spd);
+sky.object3D.position.y-=dircnY/(20-spd);
+sky.object3D.position.z-=dircnZ/(20-spd);
+};
+var rock1=document.querySelector('#rock1');
+rock1.getRotationX=function(){return rock1.object3D.rotation.x;
+};
+rock1.getRotationY=function(){return rock1.object3D.rotation.y;
+};
+rock1.getRotationZ=function(){return rock1.object3D.rotation.z;
+};
+rock1.setRotationX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+rock1.object3D.rotation.x=x;
+};
+rock1.setRotationY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+rock1.object3D.rotation.y=y;
+};
+rock1.setRotationZ=function(z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+rock1.object3D.rotation.z=z;
+};
+rock1.getScaleX=function(){return rock1.object3D.scale.x;
+};
+rock1.getScaleY=function(){return rock1.object3D.scale.y;
+};
+rock1.getScaleZ=function(){return rock1.object3D.scale.z;
+};
+rock1.setScaleX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+rock1.object3D.scale.x=x;
+};
+rock1.setScaleY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+rock1.object3D.scale.y=y;
+};
+rock1.setScaleZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+rock1.object3D.scale.z=z;
+};
+rock1.getVisibility=function(){return rock1.object3D.visible;
+};
+rock1.setVisibility=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+rock1.object3D.visible=value;
+};
+rock1.getColor=function(){return rock1.attributes.color.value;
+};
+rock1.setColor=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+rock1.setAttribute('color',value);
+};
+rock1.moveTo=function(x,y,z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+}if(arguments.length==3){rock1.object3D.position.set(x,y,z);
+}else if(arguments.length==1){rock1.object3D.position.set(x.object3D.position.x,x.object3D.position.y,x.object3D.position.z);
+}};
+rock1.getX=function(){return rock1.object3D.position.x;
+};
+rock1.getY=function(){return rock1.object3D.position.y;
+};
+rock1.getZ=function(){return rock1.object3D.position.z;
+};
+rock1.setX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+rock1.object3D.position.x=x;
+};
+rock1.setY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+rock1.object3D.position.y=y;
+};
+rock1.setZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+rock1.object3D.position.z=z;
+};
+rock1.collisionWith=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+rock1.setAttribute('aabb-collider','objects: .collidable');
+rock1.attributes['aabb-collider'].value='objects: .collidable';
+value.setAttribute('class','collidable');
+};
+rock1.moveTowards=function(targetObj,spd){if(typeof targetObj=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+var direction=new THREE.Vector3();
+var rock1_movSpeedX,rock1_movSpeedY,rock1_movSpeedZ;
+if(spd<0||spd==0){rock1_movSpeedX=0;
+rock1_movSpeedY=0;
+rock1_movSpeedZ=0;
+}else{if(spd>100||spd==100){spd=95;
+};
+rock1_movSpeedX=((targetObj.object3D.position.x-rock1.object3D.position.x)/Math.sqrt(Math.pow(targetObj.object3D.position.x-rock1.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-rock1.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-rock1.object3D.position.z,2)))/(100-spd);
+rock1_movSpeedY=((targetObj.object3D.position.y-rock1.object3D.position.y)/Math.sqrt(Math.pow(targetObj.object3D.position.x-rock1.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-rock1.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-rock1.object3D.position.z,2)))/(100-spd);
+rock1_movSpeedZ=((targetObj.object3D.position.z-rock1.object3D.position.z)/Math.sqrt(Math.pow(targetObj.object3D.position.x-rock1.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-rock1.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-rock1.object3D.position.z,2)))/(100-spd);
+};
+direction.x=rock1.object3D.position.x;
+direction.y=rock1.object3D.position.y;
+direction.z=rock1.object3D.position.z;
+direction.x+=rock1_movSpeedX;
+direction.y+=rock1_movSpeedY;
+direction.z+=rock1_movSpeedZ;
+rock1.object3D.position.set(direction.x,direction.y,direction.z);
+};
+rock1.moveInDirection=function(directionVec,spd){if(typeof directionVec=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+if(spd==0||spd<0){spd=1;
+}else if(spd>20||spd==20){spd=19;
+};
+var dircnX=directionVec.x;
+var dircnY=directionVec.y;
+var dircnZ=directionVec.z;
+rock1.object3D.position.x-=dircnX/(20-spd);
+rock1.object3D.position.y-=dircnY/(20-spd);
+rock1.object3D.position.z-=dircnZ/(20-spd);
+};
+var environment=document.querySelector('#environment');
+environment.getRotationX=function(){return environment.object3D.rotation.x;
+};
+environment.getRotationY=function(){return environment.object3D.rotation.y;
+};
+environment.getRotationZ=function(){return environment.object3D.rotation.z;
+};
+environment.setRotationX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+environment.object3D.rotation.x=x;
+};
+environment.setRotationY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+environment.object3D.rotation.y=y;
+};
+environment.setRotationZ=function(z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+environment.object3D.rotation.z=z;
+};
+environment.getScaleX=function(){return environment.object3D.scale.x;
+};
+environment.getScaleY=function(){return environment.object3D.scale.y;
+};
+environment.getScaleZ=function(){return environment.object3D.scale.z;
+};
+environment.setScaleX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+environment.object3D.scale.x=x;
+};
+environment.setScaleY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+environment.object3D.scale.y=y;
+};
+environment.setScaleZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+environment.object3D.scale.z=z;
+};
+environment.getVisibility=function(){return environment.object3D.visible;
+};
+environment.setVisibility=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+environment.object3D.visible=value;
+};
+environment.getColor=function(){return environment.attributes.color.value;
+};
+environment.setColor=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+environment.setAttribute('color',value);
+};
+environment.moveTo=function(x,y,z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+}if(arguments.length==3){environment.object3D.position.set(x,y,z);
+}else if(arguments.length==1){environment.object3D.position.set(x.object3D.position.x,x.object3D.position.y,x.object3D.position.z);
+}};
+environment.getX=function(){return environment.object3D.position.x;
+};
+environment.getY=function(){return environment.object3D.position.y;
+};
+environment.getZ=function(){return environment.object3D.position.z;
+};
+environment.setX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+environment.object3D.position.x=x;
+};
+environment.setY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+environment.object3D.position.y=y;
+};
+environment.setZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+environment.object3D.position.z=z;
+};
+environment.collisionWith=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+environment.setAttribute('aabb-collider','objects: .collidable');
+environment.attributes['aabb-collider'].value='objects: .collidable';
+value.setAttribute('class','collidable');
+};
+environment.moveTowards=function(targetObj,spd){if(typeof targetObj=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+var direction=new THREE.Vector3();
+var environment_movSpeedX,environment_movSpeedY,environment_movSpeedZ;
+if(spd<0||spd==0){environment_movSpeedX=0;
+environment_movSpeedY=0;
+environment_movSpeedZ=0;
+}else{if(spd>100||spd==100){spd=95;
+};
+environment_movSpeedX=((targetObj.object3D.position.x-environment.object3D.position.x)/Math.sqrt(Math.pow(targetObj.object3D.position.x-environment.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-environment.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-environment.object3D.position.z,2)))/(100-spd);
+environment_movSpeedY=((targetObj.object3D.position.y-environment.object3D.position.y)/Math.sqrt(Math.pow(targetObj.object3D.position.x-environment.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-environment.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-environment.object3D.position.z,2)))/(100-spd);
+environment_movSpeedZ=((targetObj.object3D.position.z-environment.object3D.position.z)/Math.sqrt(Math.pow(targetObj.object3D.position.x-environment.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-environment.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-environment.object3D.position.z,2)))/(100-spd);
+};
+direction.x=environment.object3D.position.x;
+direction.y=environment.object3D.position.y;
+direction.z=environment.object3D.position.z;
+direction.x+=environment_movSpeedX;
+direction.y+=environment_movSpeedY;
+direction.z+=environment_movSpeedZ;
+environment.object3D.position.set(direction.x,direction.y,direction.z);
+};
+environment.moveInDirection=function(directionVec,spd){if(typeof directionVec=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+if(spd==0||spd<0){spd=1;
+}else if(spd>20||spd==20){spd=19;
+};
+var dircnX=directionVec.x;
+var dircnY=directionVec.y;
+var dircnZ=directionVec.z;
+environment.object3D.position.x-=dircnX/(20-spd);
+environment.object3D.position.y-=dircnY/(20-spd);
+environment.object3D.position.z-=dircnZ/(20-spd);
+};
+var rock2=document.querySelector('#rock2');
+rock2.getRotationX=function(){return rock2.object3D.rotation.x;
+};
+rock2.getRotationY=function(){return rock2.object3D.rotation.y;
+};
+rock2.getRotationZ=function(){return rock2.object3D.rotation.z;
+};
+rock2.setRotationX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+rock2.object3D.rotation.x=x;
+};
+rock2.setRotationY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+rock2.object3D.rotation.y=y;
+};
+rock2.setRotationZ=function(z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+rock2.object3D.rotation.z=z;
+};
+rock2.getScaleX=function(){return rock2.object3D.scale.x;
+};
+rock2.getScaleY=function(){return rock2.object3D.scale.y;
+};
+rock2.getScaleZ=function(){return rock2.object3D.scale.z;
+};
+rock2.setScaleX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+rock2.object3D.scale.x=x;
+};
+rock2.setScaleY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+rock2.object3D.scale.y=y;
+};
+rock2.setScaleZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+rock2.object3D.scale.z=z;
+};
+rock2.getVisibility=function(){return rock2.object3D.visible;
+};
+rock2.setVisibility=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+rock2.object3D.visible=value;
+};
+rock2.getColor=function(){return rock2.attributes.color.value;
+};
+rock2.setColor=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+rock2.setAttribute('color',value);
+};
+rock2.moveTo=function(x,y,z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+}if(arguments.length==3){rock2.object3D.position.set(x,y,z);
+}else if(arguments.length==1){rock2.object3D.position.set(x.object3D.position.x,x.object3D.position.y,x.object3D.position.z);
+}};
+rock2.getX=function(){return rock2.object3D.position.x;
+};
+rock2.getY=function(){return rock2.object3D.position.y;
+};
+rock2.getZ=function(){return rock2.object3D.position.z;
+};
+rock2.setX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+rock2.object3D.position.x=x;
+};
+rock2.setY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+rock2.object3D.position.y=y;
+};
+rock2.setZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+rock2.object3D.position.z=z;
+};
+rock2.collisionWith=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+rock2.setAttribute('aabb-collider','objects: .collidable');
+rock2.attributes['aabb-collider'].value='objects: .collidable';
+value.setAttribute('class','collidable');
+};
+rock2.moveTowards=function(targetObj,spd){if(typeof targetObj=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+var direction=new THREE.Vector3();
+var rock2_movSpeedX,rock2_movSpeedY,rock2_movSpeedZ;
+if(spd<0||spd==0){rock2_movSpeedX=0;
+rock2_movSpeedY=0;
+rock2_movSpeedZ=0;
+}else{if(spd>100||spd==100){spd=95;
+};
+rock2_movSpeedX=((targetObj.object3D.position.x-rock2.object3D.position.x)/Math.sqrt(Math.pow(targetObj.object3D.position.x-rock2.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-rock2.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-rock2.object3D.position.z,2)))/(100-spd);
+rock2_movSpeedY=((targetObj.object3D.position.y-rock2.object3D.position.y)/Math.sqrt(Math.pow(targetObj.object3D.position.x-rock2.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-rock2.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-rock2.object3D.position.z,2)))/(100-spd);
+rock2_movSpeedZ=((targetObj.object3D.position.z-rock2.object3D.position.z)/Math.sqrt(Math.pow(targetObj.object3D.position.x-rock2.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-rock2.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-rock2.object3D.position.z,2)))/(100-spd);
+};
+direction.x=rock2.object3D.position.x;
+direction.y=rock2.object3D.position.y;
+direction.z=rock2.object3D.position.z;
+direction.x+=rock2_movSpeedX;
+direction.y+=rock2_movSpeedY;
+direction.z+=rock2_movSpeedZ;
+rock2.object3D.position.set(direction.x,direction.y,direction.z);
+};
+rock2.moveInDirection=function(directionVec,spd){if(typeof directionVec=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+if(spd==0||spd<0){spd=1;
+}else if(spd>20||spd==20){spd=19;
+};
+var dircnX=directionVec.x;
+var dircnY=directionVec.y;
+var dircnZ=directionVec.z;
+rock2.object3D.position.x-=dircnX/(20-spd);
+rock2.object3D.position.y-=dircnY/(20-spd);
+rock2.object3D.position.z-=dircnZ/(20-spd);
+};
+var rock3=document.querySelector('#rock3');
+rock3.getRotationX=function(){return rock3.object3D.rotation.x;
+};
+rock3.getRotationY=function(){return rock3.object3D.rotation.y;
+};
+rock3.getRotationZ=function(){return rock3.object3D.rotation.z;
+};
+rock3.setRotationX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+rock3.object3D.rotation.x=x;
+};
+rock3.setRotationY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+rock3.object3D.rotation.y=y;
+};
+rock3.setRotationZ=function(z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+rock3.object3D.rotation.z=z;
+};
+rock3.getScaleX=function(){return rock3.object3D.scale.x;
+};
+rock3.getScaleY=function(){return rock3.object3D.scale.y;
+};
+rock3.getScaleZ=function(){return rock3.object3D.scale.z;
+};
+rock3.setScaleX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+rock3.object3D.scale.x=x;
+};
+rock3.setScaleY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+rock3.object3D.scale.y=y;
+};
+rock3.setScaleZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+rock3.object3D.scale.z=z;
+};
+rock3.getVisibility=function(){return rock3.object3D.visible;
+};
+rock3.setVisibility=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+rock3.object3D.visible=value;
+};
+rock3.getColor=function(){return rock3.attributes.color.value;
+};
+rock3.setColor=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+rock3.setAttribute('color',value);
+};
+rock3.moveTo=function(x,y,z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+}if(arguments.length==3){rock3.object3D.position.set(x,y,z);
+}else if(arguments.length==1){rock3.object3D.position.set(x.object3D.position.x,x.object3D.position.y,x.object3D.position.z);
+}};
+rock3.getX=function(){return rock3.object3D.position.x;
+};
+rock3.getY=function(){return rock3.object3D.position.y;
+};
+rock3.getZ=function(){return rock3.object3D.position.z;
+};
+rock3.setX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+rock3.object3D.position.x=x;
+};
+rock3.setY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+rock3.object3D.position.y=y;
+};
+rock3.setZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+rock3.object3D.position.z=z;
+};
+rock3.collisionWith=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+rock3.setAttribute('aabb-collider','objects: .collidable');
+rock3.attributes['aabb-collider'].value='objects: .collidable';
+value.setAttribute('class','collidable');
+};
+rock3.moveTowards=function(targetObj,spd){if(typeof targetObj=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+var direction=new THREE.Vector3();
+var rock3_movSpeedX,rock3_movSpeedY,rock3_movSpeedZ;
+if(spd<0||spd==0){rock3_movSpeedX=0;
+rock3_movSpeedY=0;
+rock3_movSpeedZ=0;
+}else{if(spd>100||spd==100){spd=95;
+};
+rock3_movSpeedX=((targetObj.object3D.position.x-rock3.object3D.position.x)/Math.sqrt(Math.pow(targetObj.object3D.position.x-rock3.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-rock3.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-rock3.object3D.position.z,2)))/(100-spd);
+rock3_movSpeedY=((targetObj.object3D.position.y-rock3.object3D.position.y)/Math.sqrt(Math.pow(targetObj.object3D.position.x-rock3.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-rock3.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-rock3.object3D.position.z,2)))/(100-spd);
+rock3_movSpeedZ=((targetObj.object3D.position.z-rock3.object3D.position.z)/Math.sqrt(Math.pow(targetObj.object3D.position.x-rock3.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-rock3.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-rock3.object3D.position.z,2)))/(100-spd);
+};
+direction.x=rock3.object3D.position.x;
+direction.y=rock3.object3D.position.y;
+direction.z=rock3.object3D.position.z;
+direction.x+=rock3_movSpeedX;
+direction.y+=rock3_movSpeedY;
+direction.z+=rock3_movSpeedZ;
+rock3.object3D.position.set(direction.x,direction.y,direction.z);
+};
+rock3.moveInDirection=function(directionVec,spd){if(typeof directionVec=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+if(spd==0||spd<0){spd=1;
+}else if(spd>20||spd==20){spd=19;
+};
+var dircnX=directionVec.x;
+var dircnY=directionVec.y;
+var dircnZ=directionVec.z;
+rock3.object3D.position.x-=dircnX/(20-spd);
+rock3.object3D.position.y-=dircnY/(20-spd);
+rock3.object3D.position.z-=dircnZ/(20-spd);
+};
+var bullet=document.querySelector('#bullet');
+bullet.getRotationX=function(){return bullet.object3D.rotation.x;
+};
+bullet.getRotationY=function(){return bullet.object3D.rotation.y;
+};
+bullet.getRotationZ=function(){return bullet.object3D.rotation.z;
+};
+bullet.setRotationX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+bullet.object3D.rotation.x=x;
+};
+bullet.setRotationY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+bullet.object3D.rotation.y=y;
+};
+bullet.setRotationZ=function(z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+bullet.object3D.rotation.z=z;
+};
+bullet.getScaleX=function(){return bullet.object3D.scale.x;
+};
+bullet.getScaleY=function(){return bullet.object3D.scale.y;
+};
+bullet.getScaleZ=function(){return bullet.object3D.scale.z;
+};
+bullet.setScaleX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+bullet.object3D.scale.x=x;
+};
+bullet.setScaleY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+bullet.object3D.scale.y=y;
+};
+bullet.setScaleZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+bullet.object3D.scale.z=z;
+};
+bullet.getVisibility=function(){return bullet.object3D.visible;
+};
+bullet.setVisibility=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+bullet.object3D.visible=value;
+};
+bullet.getColor=function(){return bullet.attributes.color.value;
+};
+bullet.setColor=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+bullet.setAttribute('color',value);
+};
+bullet.moveTo=function(x,y,z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+}if(arguments.length==3){bullet.object3D.position.set(x,y,z);
+}else if(arguments.length==1){bullet.object3D.position.set(x.object3D.position.x,x.object3D.position.y,x.object3D.position.z);
+}};
+bullet.getX=function(){return bullet.object3D.position.x;
+};
+bullet.getY=function(){return bullet.object3D.position.y;
+};
+bullet.getZ=function(){return bullet.object3D.position.z;
+};
+bullet.setX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+bullet.object3D.position.x=x;
+};
+bullet.setY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+bullet.object3D.position.y=y;
+};
+bullet.setZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+bullet.object3D.position.z=z;
+};
+bullet.collisionWith=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+bullet.setAttribute('aabb-collider','objects: .collidable');
+bullet.attributes['aabb-collider'].value='objects: .collidable';
+value.setAttribute('class','collidable');
+};
+bullet.moveTowards=function(targetObj,spd){if(typeof targetObj=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+var direction=new THREE.Vector3();
+var bullet_movSpeedX,bullet_movSpeedY,bullet_movSpeedZ;
+if(spd<0||spd==0){bullet_movSpeedX=0;
+bullet_movSpeedY=0;
+bullet_movSpeedZ=0;
+}else{if(spd>100||spd==100){spd=95;
+};
+bullet_movSpeedX=((targetObj.object3D.position.x-bullet.object3D.position.x)/Math.sqrt(Math.pow(targetObj.object3D.position.x-bullet.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-bullet.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-bullet.object3D.position.z,2)))/(100-spd);
+bullet_movSpeedY=((targetObj.object3D.position.y-bullet.object3D.position.y)/Math.sqrt(Math.pow(targetObj.object3D.position.x-bullet.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-bullet.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-bullet.object3D.position.z,2)))/(100-spd);
+bullet_movSpeedZ=((targetObj.object3D.position.z-bullet.object3D.position.z)/Math.sqrt(Math.pow(targetObj.object3D.position.x-bullet.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-bullet.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-bullet.object3D.position.z,2)))/(100-spd);
+};
+direction.x=bullet.object3D.position.x;
+direction.y=bullet.object3D.position.y;
+direction.z=bullet.object3D.position.z;
+direction.x+=bullet_movSpeedX;
+direction.y+=bullet_movSpeedY;
+direction.z+=bullet_movSpeedZ;
+bullet.object3D.position.set(direction.x,direction.y,direction.z);
+};
+bullet.moveInDirection=function(directionVec,spd){if(typeof directionVec=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+if(spd==0||spd<0){spd=1;
+}else if(spd>20||spd==20){spd=19;
+};
+var dircnX=directionVec.x;
+var dircnY=directionVec.y;
+var dircnZ=directionVec.z;
+bullet.object3D.position.x-=dircnX/(20-spd);
+bullet.object3D.position.y-=dircnY/(20-spd);
+bullet.object3D.position.z-=dircnZ/(20-spd);
+};
+var gun1=document.querySelector('#gun1');
+gun1.getRotationX=function(){return gun1.object3D.rotation.x;
+};
+gun1.getRotationY=function(){return gun1.object3D.rotation.y;
+};
+gun1.getRotationZ=function(){return gun1.object3D.rotation.z;
+};
+gun1.setRotationX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+gun1.object3D.rotation.x=x;
+};
+gun1.setRotationY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+gun1.object3D.rotation.y=y;
+};
+gun1.setRotationZ=function(z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+gun1.object3D.rotation.z=z;
+};
+gun1.getScaleX=function(){return gun1.object3D.scale.x;
+};
+gun1.getScaleY=function(){return gun1.object3D.scale.y;
+};
+gun1.getScaleZ=function(){return gun1.object3D.scale.z;
+};
+gun1.setScaleX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+gun1.object3D.scale.x=x;
+};
+gun1.setScaleY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+gun1.object3D.scale.y=y;
+};
+gun1.setScaleZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+gun1.object3D.scale.z=z;
+};
+gun1.getVisibility=function(){return gun1.object3D.visible;
+};
+gun1.setVisibility=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+gun1.object3D.visible=value;
+};
+gun1.getColor=function(){return gun1.attributes.color.value;
+};
+gun1.setColor=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+gun1.setAttribute('color',value);
+};
+gun1.moveTo=function(x,y,z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+}if(arguments.length==3){gun1.object3D.position.set(x,y,z);
+}else if(arguments.length==1){gun1.object3D.position.set(x.object3D.position.x,x.object3D.position.y,x.object3D.position.z);
+}};
+gun1.getX=function(){return gun1.object3D.position.x;
+};
+gun1.getY=function(){return gun1.object3D.position.y;
+};
+gun1.getZ=function(){return gun1.object3D.position.z;
+};
+gun1.setX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+gun1.object3D.position.x=x;
+};
+gun1.setY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+gun1.object3D.position.y=y;
+};
+gun1.setZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+gun1.object3D.position.z=z;
+};
+gun1.collisionWith=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+gun1.setAttribute('aabb-collider','objects: .collidable');
+gun1.attributes['aabb-collider'].value='objects: .collidable';
+value.setAttribute('class','collidable');
+};
+gun1.moveTowards=function(targetObj,spd){if(typeof targetObj=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+var direction=new THREE.Vector3();
+var gun1_movSpeedX,gun1_movSpeedY,gun1_movSpeedZ;
+if(spd<0||spd==0){gun1_movSpeedX=0;
+gun1_movSpeedY=0;
+gun1_movSpeedZ=0;
+}else{if(spd>100||spd==100){spd=95;
+};
+gun1_movSpeedX=((targetObj.object3D.position.x-gun1.object3D.position.x)/Math.sqrt(Math.pow(targetObj.object3D.position.x-gun1.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-gun1.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-gun1.object3D.position.z,2)))/(100-spd);
+gun1_movSpeedY=((targetObj.object3D.position.y-gun1.object3D.position.y)/Math.sqrt(Math.pow(targetObj.object3D.position.x-gun1.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-gun1.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-gun1.object3D.position.z,2)))/(100-spd);
+gun1_movSpeedZ=((targetObj.object3D.position.z-gun1.object3D.position.z)/Math.sqrt(Math.pow(targetObj.object3D.position.x-gun1.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-gun1.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-gun1.object3D.position.z,2)))/(100-spd);
+};
+direction.x=gun1.object3D.position.x;
+direction.y=gun1.object3D.position.y;
+direction.z=gun1.object3D.position.z;
+direction.x+=gun1_movSpeedX;
+direction.y+=gun1_movSpeedY;
+direction.z+=gun1_movSpeedZ;
+gun1.object3D.position.set(direction.x,direction.y,direction.z);
+};
+gun1.moveInDirection=function(directionVec,spd){if(typeof directionVec=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+if(spd==0||spd<0){spd=1;
+}else if(spd>20||spd==20){spd=19;
+};
+var dircnX=directionVec.x;
+var dircnY=directionVec.y;
+var dircnZ=directionVec.z;
+gun1.object3D.position.x-=dircnX/(20-spd);
+gun1.object3D.position.y-=dircnY/(20-spd);
+gun1.object3D.position.z-=dircnZ/(20-spd);
+};
+var text1=document.querySelector('#text1');
+text1.getRotationX=function(){return text1.object3D.rotation.x;
+};
+text1.getRotationY=function(){return text1.object3D.rotation.y;
+};
+text1.getRotationZ=function(){return text1.object3D.rotation.z;
+};
+text1.setRotationX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+text1.object3D.rotation.x=x;
+};
+text1.setRotationY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+text1.object3D.rotation.y=y;
+};
+text1.setRotationZ=function(z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+text1.object3D.rotation.z=z;
+};
+text1.getScaleX=function(){return text1.object3D.scale.x;
+};
+text1.getScaleY=function(){return text1.object3D.scale.y;
+};
+text1.getScaleZ=function(){return text1.object3D.scale.z;
+};
+text1.setScaleX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+text1.object3D.scale.x=x;
+};
+text1.setScaleY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+text1.object3D.scale.y=y;
+};
+text1.setScaleZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+text1.object3D.scale.z=z;
+};
+text1.getVisibility=function(){return text1.object3D.visible;
+};
+text1.setVisibility=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+text1.object3D.visible=value;
+};
+text1.getColor=function(){return text1.attributes.color.value;
+};
+text1.setColor=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+text1.setAttribute('color',value);
+};
+text1.moveTo=function(x,y,z){if(typeof x=='undefined'){jsObjectError=1;
+return;
+}if(arguments.length==3){text1.object3D.position.set(x,y,z);
+}else if(arguments.length==1){text1.object3D.position.set(x.object3D.position.x,x.object3D.position.y,x.object3D.position.z);
+}};
+text1.getX=function(){return text1.object3D.position.x;
+};
+text1.getY=function(){return text1.object3D.position.y;
+};
+text1.getZ=function(){return text1.object3D.position.z;
+};
+text1.setX=function(x){if(typeof x=='undefined'){jsObjectError=1;
+return;
+};
+text1.object3D.position.x=x;
+};
+text1.setY=function(y){if(typeof y=='undefined'){jsObjectError=1;
+return;
+};
+text1.object3D.position.y=y;
+};
+text1.setZ=function(z){if(typeof z=='undefined'){jsObjectError=1;
+return;
+};
+text1.object3D.position.z=z;
+};
+text1.collisionWith=function(value){if(typeof value=='undefined'){jsObjectError=1;
+return;
+};
+text1.setAttribute('aabb-collider','objects: .collidable');
+text1.attributes['aabb-collider'].value='objects: .collidable';
+value.setAttribute('class','collidable');
+};
+text1.moveTowards=function(targetObj,spd){if(typeof targetObj=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+var direction=new THREE.Vector3();
+var text1_movSpeedX,text1_movSpeedY,text1_movSpeedZ;
+if(spd<0||spd==0){text1_movSpeedX=0;
+text1_movSpeedY=0;
+text1_movSpeedZ=0;
+}else{if(spd>100||spd==100){spd=95;
+};
+text1_movSpeedX=((targetObj.object3D.position.x-text1.object3D.position.x)/Math.sqrt(Math.pow(targetObj.object3D.position.x-text1.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-text1.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-text1.object3D.position.z,2)))/(100-spd);
+text1_movSpeedY=((targetObj.object3D.position.y-text1.object3D.position.y)/Math.sqrt(Math.pow(targetObj.object3D.position.x-text1.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-text1.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-text1.object3D.position.z,2)))/(100-spd);
+text1_movSpeedZ=((targetObj.object3D.position.z-text1.object3D.position.z)/Math.sqrt(Math.pow(targetObj.object3D.position.x-text1.object3D.position.x,2)+Math.pow(targetObj.object3D.position.y-text1.object3D.position.y,2)+Math.pow(targetObj.object3D.position.z-text1.object3D.position.z,2)))/(100-spd);
+};
+direction.x=text1.object3D.position.x;
+direction.y=text1.object3D.position.y;
+direction.z=text1.object3D.position.z;
+direction.x+=text1_movSpeedX;
+direction.y+=text1_movSpeedY;
+direction.z+=text1_movSpeedZ;
+text1.object3D.position.set(direction.x,direction.y,direction.z);
+};
+text1.moveInDirection=function(directionVec,spd){if(typeof directionVec=='undefined'||typeof spd=='undefined'){jsObjectError=1;
+return;
+};
+if(spd==0||spd<0){spd=1;
+}else if(spd>20||spd==20){spd=19;
+};
+var dircnX=directionVec.x;
+var dircnY=directionVec.y;
+var dircnZ=directionVec.z;
+text1.object3D.position.x-=dircnX/(20-spd);
+text1.object3D.position.y-=dircnY/(20-spd);
+text1.object3D.position.z-=dircnZ/(20-spd);
+};
+;
+document.querySelector('a-scene').addEventListener('loaded', function(){/* Start building here, id = plane1 */;
+
+function randomizeRock(obj) {
+obj.moveTo(universal.random(-5, 5), universal.random(5, 7), universal.random(-5, 5));
+
+}
+
+plane1.setScaleX(3);
+
+plane1.setScaleY(3);
+
+plane1.setScaleZ(3);
+/* Start building here, id = sky */;
+/*Enter here, id = rock1*/
+
+setInterval(function() {
+  rock1.setY(rock1.getY() - .065);
+
+  if(rock1.getY()<0){
+  	rock1.moveTo(universal.random(-5, 5), 6, universal.random(-5, 5));
+
+  }
+}, 10);
+
+
+
+rock1.collisionWith(plane1);
+
+rock1.collisionWith(bullet);
+
+rock1.addEventListener('hitclosest', function(e) {
+  /*e.detail.el gives the collision object*/
+  if (e.detail.el == plane1) {
+    rock1.moveTo(universal.random(-5, 5), 6, universal.random(-5, 5));
+
+
+  }
+  else if(e.detail.el==bullet){
+    randomizeRock(rock1);
+
+    bullet.setVisibility(false);
+
+    updateScore();
+
+  }
+});
+/*Enter here, id = environment*//*Enter here, id = rock2*/
+setInterval(function() {
+  rock2.setY(rock1.getY() - .065);
+
+  if(rock2.getY()<0){
+  	rock2.moveTo(universal.random(-5, 5), 6, universal.random(-5, 5));
+
+  }
+}, 10);
+
+
+
+rock2.collisionWith(plane1);
+
+rock2.collisionWith(bullet);
+
+rock2.addEventListener('hitclosest', function(e) {
+  /*e.detail.el gives the collision object*/
+  if (e.detail.el == plane1) {
+    rock2.moveTo(universal.random(-5, 5), 6, universal.random(-5, 5));
+
+
+  }
+  else if(e.detail.el==bullet){
+    randomizeRock(rock2);
+
+    bullet.setVisibility(false);
+
+    updateScore();
+
+  }
+});
+/*Enter here, id = rock3*/
+setInterval(function() {
+  rock3.setY(rock3.getY() - .065);
+
+  if(rock3.getY()<0){
+  	rock3.moveTo(universal.random(-5, 5), 6, universal.random(-5, 5));
+
+  }
+}, 10);
+
+
+
+rock3.collisionWith(plane1);
+
+rock3.collisionWith(bullet);
+
+rock3.addEventListener('hitclosest', function(e) {
+  /*e.detail.el gives the collision object*/
+  if (e.detail.el == plane1) {
+    rock3.moveTo(universal.random(-5, 5), 6, universal.random(-5, 5));
+
+
+  }
+  else if(e.detail.el==bullet){
+    randomizeRock(rock3);
+
+    bullet.setVisibility(false);
+
+    updateScore();
+
+  }
+});
+/*Enter here, id = bullet*/
+/*Enter here, id = bullet*/
+var intervalE;
+
+bullet.moveTo(gun1.getX() , gun1.getY(), gun1.getZ());
+
+scene.addEventListener('click', function(e) {
+  bullet.setVisibility(true);
+
+  bullet.moveTo(gun1.getX()- .2, gun1.getY(), gun1.getZ()-1);
+
+  var source3dPoint = new THREE.Vector3(camera.getX(), camera.getY(), camera.getZ());
+
+  var destination3dPoint = new THREE.Vector3(cursor.getX(), cursor.getY(), cursor.getZ());
+
+  var directionVector = new THREE.Vector3();
+
+  directionVector = {
+    x: source3dPoint.x - destination3dPoint.x,
+    y: source3dPoint.y - destination3dPoint.y,
+    z: source3dPoint.z - destination3dPoint.z
+  };
+
+  console.log(directionVector.y);
+
+  clearInterval(intervalE);
+
+  intervalE = setInterval(function() {
+    bullet.moveInDirection(directionVector, 16);
+
+  }, 4);
+
+}, false);
+/*Enter here, id = gun1*/
+/*Enter here, id = gun1*/
+var deg = Math.PI / 180;
+
+gun1.moveTo(camera.getX() + .5, camera.getY() - 1.6, camera.getZ());
+
+camera.addEventListener('componentchanged', function(evt) {
+  if (evt.detail.name === 'rotation') {
+
+    gun1.setRotationX(evt.target.object3D.rotation.x);
+
+    gun1.setRotationY(evt.target.object3D.rotation.y);
+
+    bullet.setRotationX(evt.target.object3D.rotation.x);
+
+    bullet.setRotationY(evt.target.object3D.rotation.y);
+
+    bullet.setRotationZ(evt.target.object3D.rotation.z);
+
+gun1.moveTo(cursor.getX(), cursor.getY() - .9, cursor.getZ() -.3);
+
+  }
+});
+
+
+camera.addEventListener('componentchanged', function(evt) {
+  if (evt.detail.name === 'position') {
+gun1.moveTo(cursor.getX(), cursor.getY() - .9, cursor.getZ() -.3);
+  }
+});
+/*Enter here, id = text1*/
+var score = 0;
+
+text1.setScaleX(.5);
+
+text1.setScaleY(.5);
+
+text1.setScaleZ(.5);
+
+function updateScore() {
+  score++;
+
+  text1.setAttribute('value', 'Score: ' + score);
+
+}
+var a = Math.PI / 180;
+
+camera.addEventListener('componentchanged', function(evt) {
+  if (evt.detail.name === 'rotation') {
+    text1.moveTo(cursor.getX(), cursor.getY() + .5, cursor.getZ());
+
+    text1.setRotationX(evt.target.object3D.rotation.x);
+
+    text1.setRotationY(evt.target.object3D.rotation.y);
+
+    text1.setRotationZ(evt.target.object3D.rotation.z);
+
+  }
+});
+
+camera.addEventListener('componentchanged', function(evt) {
+  if (evt.detail.name === 'position') {
+    text1.moveTo(cursor.getX(), cursor.getY() + .5, cursor.getZ());
+
+  }
+});
+});
+var universal ={random: function(min, max) { return Math.random() * (max - min) + min;
+}};
+camera.attach=function(obj,position){scene.removeChild(obj);
+obj.setAttribute('position',position);
+camera.appendChild(obj)};
+;
+
+				var hatchSph=document.createElement('a-sphere');
+
+				hatchSph.setAttribute('position','1 0 0');
+hatchSph.setAttribute('scale','.1 .1 .1');
+hatchSph.setAttribute('id','sphinsv');
+hatchSph.setAttribute('visible','false');
+
+				camera.appendChild(hatchSph);
+
+	var hatchUp=0;
+var hatchDown=0;
+var hatchLeft=0;
+var hatchRight=0;
+function clearThis(obj){if(obj.id=="up"){hatchUp=0}else if(obj.id=="down"){hatchDown=0}else if(obj.id=="left"){hatchLeft=0}else{hatchRight=0}};
+var btn=document.getElementById("up");
+var btn2=document.getElementById("down");
+var btn3=document.getElementById("left");
+var btn4=document.getElementById("right");
+var directionVector=new THREE.Vector3();
+function step(){if(hatchUp==1){var source3dPoint=new THREE.Vector3(camera.object3D.position.x,camera.object3D.position.y,camera.object3D.position.z);
+var destination3dPoint=new THREE.Vector3(cursor.object3D.matrixWorld.elements[12],cursor.object3D.matrixWorld.elements[13],cursor.object3D.matrixWorld.elements[14]);
+directionVector={x:source3dPoint.x-destination3dPoint.x,y:source3dPoint.y-destination3dPoint.y,z:source3dPoint.z-destination3dPoint.z};
+camera.moveInDirection(directionVector,"forward")}else if(hatchDown==1){var source3dPoint=new THREE.Vector3(camera.object3D.position.x,camera.object3D.position.y,camera.object3D.position.z);
+var destination3dPoint=new THREE.Vector3(cursor.object3D.matrixWorld.elements[12],cursor.object3D.matrixWorld.elements[13],cursor.object3D.matrixWorld.elements[14]);
+directionVector={x:source3dPoint.x-destination3dPoint.x,y:source3dPoint.y-destination3dPoint.y,z:source3dPoint.z-destination3dPoint.z};
+camera.moveInDirection(directionVector,"backward")}else if(hatchLeft==1){var source3dPoint=new THREE.Vector3(camera.object3D.position.x,camera.object3D.position.y,camera.object3D.position.z);
+var destination3dPoint=new THREE.Vector3(sphinsv.object3D.matrixWorld.elements[12],sphinsv.object3D.matrixWorld.elements[13],sphinsv.object3D.matrixWorld.elements[14]);
+directionVector={x:source3dPoint.x-destination3dPoint.x,y:source3dPoint.y-destination3dPoint.y,z:source3dPoint.z-destination3dPoint.z};
+camera.moveInDirection(directionVector,"backward")}else if(hatchRight==1){var source3dPoint=new THREE.Vector3(camera.object3D.position.x,camera.object3D.position.y,camera.object3D.position.z);
+var destination3dPoint=new THREE.Vector3(sphinsv.object3D.matrixWorld.elements[12],sphinsv.object3D.matrixWorld.elements[13],sphinsv.object3D.matrixWorld.elements[14]);
+directionVector={x:source3dPoint.x-destination3dPoint.x,y:source3dPoint.y-destination3dPoint.y,z:source3dPoint.z-destination3dPoint.z};
+camera.moveInDirection(directionVector,"forward")};
+window.requestAnimationFrame(step)};
+window.requestAnimationFrame(step);
+btn.onmousedown=function(){hatchUp=1};
+btn.onmouseup=function(){hatchUp=0};
+btn.addEventListener("touchstart",function(){hatchUp=1},!1);
+btn.addEventListener("touchend",function(){hatchUp=0},!1);
+btn2.addEventListener("touchstart",function(){hatchDown=1},!1);
+btn2.addEventListener("touchend",function(){hatchDown=0},!1);
+btn2.onmousedown=function(){hatchDown=1};
+btn2.onmouseup=function(){hatchDown=0};
+btn3.addEventListener("touchstart",function(){hatchLeft=1},!1);
+btn3.addEventListener("touchend",function(){hatchLeft=0},!1);
+btn3.onmousedown=function(){hatchLeft=1};
+btn3.onmouseup=function(){hatchLeft=0};
+btn4.addEventListener("touchstart",function(){hatchRight=1},!1);
+btn4.addEventListener("touchend",function(){hatchRight=0},!1);
+btn4.onmousedown=function(){hatchRight=1};
+btn4.onmouseup=function(){hatchRight=0};
+var hatchPositionX=camera.object3D.position.x,hatchPositionY=camera.object3D.position.y,hatchPositionZ=camera.object3D.position.z;
+var camMovSpd=30;
+camera.moveInDirection=function(directionVec,sign){var dircnX=directionVec.x;
+var dircnY=directionVec.y;
+var dircnZ=directionVec.z;
+if(sign=="forward"){hatchPositionX-=dircnX/camMovSpd,hatchPositionZ-=dircnZ/camMovSpd;
+camera.setAttribute('position',hatchPositionX+' '+hatchPositionY+' '+hatchPositionZ)}else if(sign=="backward"){hatchPositionX+=dircnX/camMovSpd,hatchPositionZ+=dircnZ/camMovSpd;
+camera.setAttribute('position',hatchPositionX+' '+hatchPositionY+' '+hatchPositionZ)}};
+camera.addEventListener('componentchanged',function(evt){if(evt.detail.name==='position'){var source3dPoint=new THREE.Vector3(camera.object3D.position.x,camera.object3D.position.y,camera.object3D.position.z);
+var destination3dPoint=new THREE.Vector3(cursor.object3D.matrixWorld.elements[12],cursor.object3D.matrixWorld.elements[13],cursor.object3D.matrixWorld.elements[14]);
+directionVector={x:source3dPoint.x-destination3dPoint.x,y:source3dPoint.y-destination3dPoint.y,z:source3dPoint.z-destination3dPoint.z}};
+hatchPositionX=camera.object3D.position.x;
+hatchPositionY=camera.object3D.position.y;
+hatchPositionZ=camera.object3D.position.z});
+camera.addEventListener('componentchanged',function(evt){if(evt.detail.name==='rotation'){var source3dPoint=new THREE.Vector3(camera.object3D.position.x,camera.object3D.position.y,camera.object3D.position.z);
+var destination3dPoint=new THREE.Vector3(cursor.object3D.matrixWorld.elements[12],cursor.object3D.matrixWorld.elements[13],cursor.object3D.matrixWorld.elements[14]);
+directionVector={x:source3dPoint.x-destination3dPoint.x,y:source3dPoint.y-destination3dPoint.y,z:source3dPoint.z-destination3dPoint.z}}});
+document.querySelector('a-scene').addEventListener('loaded',function(){if(jsObjectError==1){console.log('errors found!');
+document.getElementById('jsErrorDetection').childNodes[0].style.backgroundColor='#7f7f92';
+document.getElementById('jsErrorDetection').style.zIndex='5';
+document.getElementById('jsErrorDetection').childNodes[0].style.zIndex='5';
+document.getElementById('jsErrorDetection').childNodes[0].childNodes[0].style.color='white';
+document.getElementById('jsErrorDetection').childNodes[0].childNodes[0].innerText='Null object passed in function. Check your JS code'}});
+window.addEventListener('DOMNodeInserted',function(evt){for(var i=0;
+i<document.getElementsByClassName('collapsible component').length;
+i++){if(i==0){continue}document.getElementsByClassName('collapsible component')[i].style.display="none"}});
+
+		  }
+		});
+
+	</script>
+  </head>
+  <!--<a-assets>
+        <img id="imgUrl" src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/resources/battleGround.jpg" crossorigin="anonymous">
+	</a-assets>-->
+  <body>
+  <a-scene start id='scene'>
+
+		<a-assets>
+      <img id="hatchEmptyAsset" src="" crossorigin="anonymous">
+      <a-asset-item id="hatchRockObj" src="assets/models/rock.obj" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="hatchRockMtl" src="assets/models/bullet.mtl" crossorigin="anonymous"></a-asset-item>
+      <img id="battleGround" src="" crossorigin="anonymous">
+      <img id="blueSky" src="" crossorigin="anonymous">
+      <a-asset-item id="hatchBulletObj" src="assets/models/bullet.obj" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="hatchBulletMtl" src="assets/models/bullet.mtl" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="hatchGunObj" src="assets/models/gun.obj" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="hatchGunMtl" src="assets/models/gun.mtl" crossorigin="anonymous"></a-asset-item>
+    </a-assets>
+
+    <a-text value="my-text" scale="3 3 3" color="#FF926B" position="6.3 0.5 6.8" id="text1"></a-text>
+
+
+<a-obj-model position="3.8 1 6.3" mtl="#hatchGunMtl" src="#hatchGunObj" id="gun1">
+</a-obj-model>
+<a-obj-model position="-1.1 0.2 5" mtl="#hatchBulletMtl" src="#hatchBulletObj" id="bullet">
+</a-obj-model>
+<a-obj-model position="1.6 1.1 -0.2" mtl="#hatchRockMtl" src="#hatchRockObj" id="rock3">
+</a-obj-model>
+<a-obj-model position="1.3 3.5 -3.8" mtl="#hatchRockMtl" src="#hatchRockObj" id="rock2">
+</a-obj-model>
+<a-obj-model position="-2.1 0.4 -3.6" mtl="#hatchRockMtl" src="#hatchRockObj" id="rock1">
+</a-obj-model>
+<a-plane position="0 -.5 -4" id="plane1" color="" rotation="-90 0 0" width="25" height="25" transparent="true" src="#battleGround">
+</a-plane>
+<a-sky id="sky" color="" src="#blueSky">
+</a-sky>
+<a-camera id="camera" position="0 0 10">
+  <a-cursor id="cursor" color="blue">
+  </a-cursor>
+</a-camera><a-entity environment="preset:arches" id="environment"></a-entity>
+
+  </a-scene>
+  <div id="jsErrorDetection" style="float:left;
+width:90%;
+height:100px;
+margin-left:20%;
+z-index:-5;
+" class="a-enter-vr"><div style="width: 40%;
+z-index:-5;
+margin-left: 33%;
+margin-top: -40%;
+text-align: center;
+background-color: transparent;
+height: 67px;
+border-radius: 2px;
+"><p style="padding:15px;
+color:transparent"></p></div></div><div class="a-enter-vr" style="float:left;
+width: 18.5%;
+height:100px;
+right: 80.5%;
+"><div style="margin-left: 53px;
+width: 45px;
+"><div style="width:45px;
+height:45px;
+cursor:pointer;
+border-radius:0px;
+background-image:url('https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/resources/up.png');
+background-size:100% 100%;
+text-align:center" id="up"></div></div><div style="width:0%;
+ margin-left:53px;
+margin-top:5px;
+"><div id="left" style="border-radius:0px;
+text-align:center;
+cursor:pointer;
+width:45px;
+height:45px;
+line-height:3.85;
+background-image:url('https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/resources/down.png');
+background-size:100% 100%;
+transform: rotate(90deg);
+margin-left: -53px;
+"></div><div id="down" style="border-radius:0px;
+text-align:center;
+cursor:pointer;
+width:45px;
+height:45px;
+line-height:3.85;
+background-image:url('https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/resources/down.png');
+background-size:100% 100%;
+margin-top: -45px;
+"></div><div style="margin-left:53px;
+margin-top: -45px;
+"><div id="right" style="border-radius:0px;
+text-align:center;
+cursor:pointer;
+width:45px;
+height:45px;
+line-height:3.85;
+background-image:url('https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/resources/down.png');
+background-size:100% 100%;
+transform: rotate(270deg);
+"></div></div></div></div>
+  </body>
+</html>

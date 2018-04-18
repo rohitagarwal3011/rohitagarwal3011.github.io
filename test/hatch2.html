@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project on HatchVR</title>
+    <meta name="description" content="Checkout my immersive VR application made using HatchVR">
+	  <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+	  <meta HTTP-EQUIV="Expires" CONTENT="-1">
+    <script src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/aframe-0.7.1.min.js"></script>
+    <script src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/aframe-environments.min.js"></script>
+	<script src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/aframe-collision.js"></script>
+	<link rel="shortcut icon" href="/favicon.png">
+	<style type="text/css">
+		body { -webkit-touch-callout: none !important; }
+		a { -webkit-user-select: none !important; }
+		div { -webkit-user-select: none !important; }
+	</style>
+  <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
+  </head>
+  <!--<a-assets>
+        <img id="imgUrl" src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/resources/battleGround.jpg" crossorigin="anonymous">
+	</a-assets>-->
+  <body>
+  <a-scene start id='scene' embedded arjs>
+
+		<a-assets>
+      <a-asset-item id="8af10a98-990c-6b14-3131-2d92c5282f11" src="https://poly.googleapis.com/downloads/5yFw5WUEn_7/eYqKLeVCILZ/model.obj" crossorigin="anonymous">
+      </a-asset-item>
+      <!-- <a-asset-item id="8af10a98-990c-6b14-3131-2d92c5282f11" src="https://poly.googleapis.com/downloads/5yFw5WUEn_7/eYqKLeVCILZ/model.mtl" crossorigin="anonymous">
+      </a-asset-item> -->
+      <a-asset-item id="f7461a88-f1d5-5ec8-76c8-5fdb59a87345" src="https://poly.googleapis.com/downloads/cI9YQFHd5Ua/2tcj7RFXzy1/LivingRoom.obj" crossorigin="anonymous"></a-asset-item>
+      <!-- <a-asset-item id="f7461a88-f1d5-5ec8-76c8-5fdb59a87345" src="https://poly.googleapis.com/downloads/cI9YQFHd5Ua/2tcj7RFXzy1/LivingRoom.mtl" crossorigin="anonymous"></a-asset-item> -->
+
+      <img id="woodTexture__zz__e0a23cb5-5b38-b280-6d86-ca8693c4c07f_*DaTe*_Sat Mar 17 2018 14:21:27 GMT+0000 (UTC)" src="https://s3.amazonaws.com/my-trybucket/projectFiles/AnujBJot99qYz/e0a23cb5-5b38-b280-6d86-ca8693c4c07fwoodTexture.jpg" crossorigin="anonymous">
+      <a-sound id="4aafd41c-5cdd-2edd-26cf-36628e3eb4d0" src="https://s3.amazonaws.com/my-trybucket/projectFiles/AnujBJot99qYz/bd5fe2fe-88d5-5114-09d0-e4e349a2abadwaitSong50Sec.mp3" crossorigin="anonymous"></a-sound>
+    </a-assets>
+    <a-anchor hit-testing-enabled='true' preset='hiro' >
+    <a-entity scale="0.05 0.05 0.05">
+      <a-animation attribute="rotation" dur="10000" easing="linear" direction="normal" from="0 0 0" to="-0 360 0" repeat="indefinite">
+      </a-animation>
+      <a-sound src="#4aafd41c-5cdd-2edd-26cf-36628e3eb4d0" autoplay="false" id="wait"></a-sound>
+      <a-box rotation="0 82.47481121444822 0" color="" position="0.272 1.665 3.31" id="cube2" scale="9.481 3.956 1" visible="true" src="#woodTexture__zz__e0a23cb5-5b38-b280-6d86-ca8693c4c07f_*DaTe*_Sat Mar 17 2018 14:21:27 GMT+0000 (UTC)"></a-box>
+      <a-box rotation="1.4237547570215163 0.36818000475822465 0.45086162713407185" color="" position="5.901 1.833 -1.5586463204673027" id="cube1" scale="9.014 3.6928838337802943 1" visible="true" src="#woodTexture__zz__e0a23cb5-5b38-b280-6d86-ca8693c4c07f_*DaTe*_Sat Mar 17 2018 14:21:27 GMT+0000 (UTC)"></a-box>
+     <a-obj-model position="4.8 0.19318810084472426 2.9" src="#f7461a88-f1d5-5ec8-76c8-5fdb59a87345" id="Living" scale="1 1 1" rotation="0 0 0" visible="true"></a-obj-model>
+     <a-obj-model position="4.327 -0.401 3.302" src="#8af10a98-990c-6b14-3131-2d92c5282f11" id="boombox" scale="1 1 1" rotation="6.764429277363245 71.42721055172896 -4.872470134707736" visible="true"></a-obj-model>
+
+   <a-plane position="0 -0.5 -4" id="plane1" color="rgb(107,230,183)" rotation="-90.10300322346967 0.11470783351173734 0" width="25" height="25" transparent="true" scale="1 1 1" visible="true">
+   </a-plane>
+</a-entity>
+</a-anchor>
+
+
+<a-camera-static/>
+  </a-scene>
+  <div id="jsErrorDetection" style="float:left;width:90%;height:100px;margin-left:20%;z-index:-5;" class="a-enter-vr"><div style="width: 40%;z-index:-5;margin-left: 33%;margin-top: -40%;text-align: center;background-color: transparent;height: 67px;border-radius: 2px;"><p style="padding:15px;color:transparent"></p></div></div><div class="a-enter-vr" style="float:left;width: 18.5%;height:100px;right: 80.5%;"><div style="margin-left: 53px;width: 45px;"><div style="width:45px;height:45px;cursor:pointer;border-radius:0px;background-image:url('https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/resources/up.png');background-size:100% 100%;text-align:center" id="up"></div></div><div style="width:0%; margin-left:53px;margin-top:5px;"><div id="left" style="border-radius:0px;text-align:center;cursor:pointer;width:45px;height:45px;line-height:3.85;background-image:url('https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/resources/down.png');background-size:100% 100%;transform: rotate(90deg);margin-left: -53px;"></div><div id="down" style="border-radius:0px;text-align:center;cursor:pointer;width:45px;height:45px;line-height:3.85;background-image:url('https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/resources/down.png');background-size:100% 100%;margin-top: -45px;"></div><div style="margin-left:53px;margin-top: -45px;"><div id="right" style="border-radius:0px;text-align:center;cursor:pointer;width:45px;height:45px;line-height:3.85;background-image:url('https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/resources/down.png');background-size:100% 100%;transform: rotate(270deg);"></div></div></div></div>
+  </body>
+  <script>
+  		scene.addEventListener('exit-vr',function(){
+
+  setTimeout(function(){
+  	document.getElementsByTagName('canvas')[0].style.width=window.innerWidth+'px';
+  document.getElementsByTagName('canvas')[0].style.height=window.innerHeight+'px';
+  document.getElementById('up').style.display="";
+  document.getElementById('down').style.display="";
+  document.getElementById('left').style.display="";
+  document.getElementById('right').style.display="";
+  },400);
+});
+
+scene.addEventListener('enter-vr',function(){
+
+  setTimeout(function(){
+  	document.getElementsByTagName('canvas')[0].style.width=window.innerWidth+'px';
+  document.getElementsByTagName('canvas')[0].style.height=window.innerHeight+'px';
+  },400);
+  document.getElementById('up').style.display="none";
+  document.getElementById('down').style.display="none";
+  document.getElementById('left').style.display="none";
+  document.getElementById('right').style.display="none";
+});
+window.addEventListener("orientationchange", function() {
+	setTimeout(function(){
+    	  	document.getElementsByTagName('canvas')[0].style.width=window.innerWidth+'px';
+  document.getElementsByTagName('canvas')[0].style.height=window.innerHeight+'px';
+
+    },300);
+});
+  </script>
+</html>

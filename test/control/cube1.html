@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+    <title>A-Frame Mouse Cursor Component - Basic</title>
+
+    <script src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/aframe-0.7.1.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+    <script src="aframe-ar.js"></script>
+
+    <link rel="stylesheet" href="css/style1.css">
+
+  </head>
+  <body>
+
+    <a-scene cursor="fuse: false; rayOrigin: mouse" embedded="true" width="100%" height="100%">
+      <a-assets>
+        <a-asset-item id='cat-obj' src='cat/Mesh_Cat.obj'></a-asset-item>
+        <a-asset-item id='cat-mtl' src='aladin/Mesh_Cat.mtl'></a-asset-item>
+      </a-assets>
+      <a-anchor hit-testing-enabled='false' preset='custom' type='pattern' url='logo-ar.patt' >
+        <a-entity id="myscene">
+        <a-obj-model id="cube" position="0 0 0" src="#cat-obj" mtl="#cat-mtl"  scale="0.003 0.003 0.003" rotation="0 0 0" onclick="myFunction();" visible="true">
+        </a-entity>
+      </a-anchor>
+      <a-camera-static/>
+
+    </a-scene>
+
+<div id="container">
+    <button id="btn-zoom-in" class="button" onclick="zoomIn();">+</button>
+    <button id="btn-zoom-out" class="button" onclick="zoomOut();">-</button>
+    <button id="btn-up" class="button" onmousedown="continuosMoveUp();" ontouchstart="continuosMoveUp();" onmouseup="continuosMoveUpStop();" ontouchend="continuosMoveUpStop();"></button>
+    <button id="btn-down" class="button" onmousedown="continuosMoveDown();" ontouchstart="continuosMoveDown();" onmouseup="continuosMoveDownStop();" ontouchend="continuosMoveDownStop();"></button>
+    <button id="btn-left" class="button" onmousedown="continuosMoveLeft();" ontouchstart="continuosMoveLeft();"  onmouseup="continuosMoveLeftStop();" ontouchend="continuosMoveLeftStop();"></button>
+    <button id="btn-right" class="button" onmousedown="continuosMoveRight();" ontouchstart="continuosMoveRight();" onmouseup="continuosMoveRightStop();" ontouchend="continuosMoveRightStop();"></button>
+    <button id="btn-jump"  onclick="jump();"><span>Jump</span></button>
+    <button id="btn-rotate-left" class="button" onmousedown="continuosRotateLeft();" ontouchstart="continuosRotateLeft();" onmouseup="continuosRotateLeftStop();" ontouchend="continuosRotateLeftStop();"></button>
+    <button id="btn-rotate-right" class="button" onmousedown="continuosRotateRight();" ontouchstart="continuosRotateRight();" onmouseup="continuosRotateRightStop();" ontouchend="continuosRotateRightStop();"></button>
+</div>
+
+  </body>
+  <script>
+  function myFunction() {
+    var START_POS = 0;
+    var speed = 0.5;
+    var GRAVITY = -0.3;
+
+    var pos = START_POS;
+
+    cube.object3D.position.y = START_POS;
+
+    var jumpTimer = setInterval(function(){
+
+      pos += speed;
+      speed += GRAVITY;
+
+      cube.object3D.position.y = pos;
+
+      if (cube.object3D.position.y < 0){
+
+        cube.object3D.position.y = START_POS;
+        clearInterval(jumpTimer);
+      }
+    }, 100);
+  }
+
+  function zoomIn(){
+      console.log("ZoomIn");
+      myscene.object3D.scale.x += 0.5;
+      myscene.object3D.scale.y += 0.5;
+      myscene.object3D.scale.z += 0.5;
+  }
+
+
+  function zoomOut(){
+      console.log("ZoomOut");
+    myscene.object3D.scale.x -= 0.5;
+    myscene.object3D.scale.y -= 0.5;
+    myscene.object3D.scale.z -= 0.5;
+  }
+
+
+  var moveUpInterval;
+  function continuosMoveUp(){
+    moveUpInterval = setInterval(function() {
+      cube.object3D.position.z -= 0.005;
+    },10);
+  }
+
+  function continuosMoveUpStop(){
+    clearInterval(moveUpInterval);
+  }
+
+  var moveDownInterval;
+  function continuosMoveDown(){
+    moveDownInterval = setInterval(function() {
+      cube.object3D.position.z += 0.005;
+    },10);
+  }
+
+  function continuosMoveDownStop(){
+    clearInterval(moveDownInterval);
+  }
+
+
+  var moveLeftInterval;
+  function continuosMoveLeft(){
+    moveLeftInterval = setInterval(function() {
+      cube.object3D.position.x -= 0.005;
+    },10);
+  }
+
+  function continuosMoveLeftStop(){
+    clearInterval(moveLeftInterval);
+  }
+
+  var moveRightInterval;
+  function continuosMoveRight(){
+    moveRightInterval = setInterval(function() {
+      cube.object3D.position.x += 0.005;
+    },10);
+  }
+
+  function continuosMoveRightStop(){
+    clearInterval(moveRightInterval);
+  }
+
+  function jump() {
+    var START_POS = 0;
+    var speed = 0.5;
+    var GRAVITY = -0.3;
+
+    var pos = START_POS;
+
+    cube.object3D.position.y = START_POS;
+
+    var jumpTimer = setInterval(function(){
+
+      pos += speed;
+      speed += GRAVITY;
+
+      cube.object3D.position.y = pos;
+
+      if (cube.object3D.position.y < 0){
+
+        cube.object3D.position.y = START_POS;
+        clearInterval(jumpTimer);
+      }
+    }, 100);
+  }
+
+
+  var rotateLeftInterval;
+  function continuosRotateLeft(){
+    rotateLeftInterval = setInterval(function() {
+      cube.object3D.rotation.y += 0.1;
+    },10);
+  }
+
+  function continuosRotateLeftStop(){
+    clearInterval(rotateLeftInterval);
+  }
+
+  var rotateRightInterval;
+  function continuosRotateRight(){
+    rotateRightInterval = setInterval(function() {
+      cube.object3D.rotation.y -= 0.1;
+    },10);
+  }
+
+  function continuosRotateRightStop(){
+    clearInterval(rotateRightInterval);
+  }
+
+  </script>
+</html>

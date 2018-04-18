@@ -1,0 +1,19 @@
+<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/examples/vendor/aframe/build/aframe.min.js"></script>
+<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/build/aframe-ar.js"></script>
+<body style='margin : 0px; overflow: hidden;'>
+	<a-scene embedded arjs='sourceType: webcam'>
+
+        <!-- <a-scene embedded arjs='sourceType: webcam; sourceWidth: 240; sourceHeight: 180;'> -->
+	<!-- <a-scene arjs='sourceType: image; sourceUrl:../../data/images/screenshot.png'> -->
+	<!-- <a-scene embedded arjs='sourceType: image; sourceUrl:../../data/images/armchair.jpg;'> -->
+
+		<a-assets>
+			<a-asset-item id="assetAframe" src="models/ply/aframe.ply"></a-asset-item>
+		</a-assets>
+
+		<!-- <a-marker type='unknown'> -->
+		<a-entity ply-model="src: #assetAframe" rotation='-90 0 0'scale='0.02 0.02 0.02'></a-entity>
+
+		<a-marker-camera preset='hiro'></a-marker-camera>
+	</a-scene>
+</body>

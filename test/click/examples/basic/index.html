@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+    <title>A-Frame Mouse Cursor Component - Basic</title>
+
+    <script src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/aframe-0.7.1.min.js"></script>
+    <script src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/aframe-environments.min.js"></script>
+	  <script src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/aframe-collision.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+    <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../common.css"/>
+  </head>
+  <body>
+    <!-- Either fuse: false or trackingMethod best causes the webview to stop working
+     Renove each element and try click event again
+     Also the click event in native feels different -->
+    <a-scene cursor="fuse: false; rayOrigin: mouse">
+
+      <a-anchor hit-testing-enabled='false' preset="hiro">
+        <a-entity scale="0.5 0.5 0.5">
+          <a-box id="cube" position="1 0 0" radius="5" rotation="30 30 0" color="skyblue" onclick="myFunction()">
+            <!-- <a-animation attribute="rotation" begin="click" dur="500" fill="backwards" to="30 30 360"></a-animation>
+            <a-animation attribute="position" begin="click" from="1.0 0.0 0.0" to="1.0 1.0 0.0" direction="alternate" dur="500"
+    					repeat="1" easing='ease-in-out-cubic'></a-animation> -->
+          </a-box>
+          <a-sphere position="0 0 0" radius="0.5" rotation="30 30 0" color="red">
+            <a-animation attribute="rotation" begin="click" dur="500" fill="backwards" to="30 30 360"></a-animation>
+            <a-animation attribute="position" begin="click" from="0.0 0.0 0.0" to="0.0 1.0 0.0" direction="alternate" dur="500"
+    					repeat="1" easing='ease-in-out-cubic'></a-animation>
+          </a-sphere>
+        </a-entity>
+      </a-anchor>
+      <a-camera-static/>
+
+    </a-scene>
+
+    <script>
+    function myFunction() {
+      var cube = document.querySelector('#cube');
+      setInterval(function() {
+        cube.object3D.position.y += 0.01;
+      },100);
+
+    }
+    </script>
+
+  </body>
+</html>

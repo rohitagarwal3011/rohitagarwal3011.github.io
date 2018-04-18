@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+    <title>A-Frame Mouse Cursor Component - Basic</title>
+
+    <script src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/aframe-0.7.1.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+    <script src="aframe-ar.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+
+  </head>
+  <body>
+
+    <a-scene cursor="fuse: false; rayOrigin: mouse" embedded="true" width="100%" height="100%">
+      <a-assets>
+        <a-asset-item id='aladdin-obj' src='aladin/Aladdin.obj'></a-asset-item>
+        <a-asset-item id='aladdin-mtl' src='aladin/Aladdin.mtl'></a-asset-item>
+      </a-assets>
+      <a-anchor hit-testing-enabled='false' preset='custom' type='pattern' url='logo-ar.patt' >
+        <a-entity >
+        <!-- <a-plane color="black" position="0 0 0" width="5px" height="5px"></a-plane> -->
+        <!-- <a-box id="cube" position="0 0 0" scale="0.1 0.1 0.1" rotation="0 0 0" color="skyblue" onclick="myFunction()">
+          </a-box> -->
+        <a-obj-model id="cube" position="0 0 0" src="#aladdin-obj" mtl="#aladdin-mtl"  scale="0.003 0.003 0.003" rotation="0 0 0" visible="true">
+        </a-entity>
+      </a-anchor>
+      <a-camera-static/>
+
+    </a-scene>
+
+<div id="container">
+    <div id="btn-up" class="button" onmousedown="moveDown();"></div>
+    <div id="btn-down" class="button" onclick="moveUp();"></div>
+    <div id="btn-left" class="button" onclick="moveLeft();"></div>
+    <div id="btn-right" class="button" onclick="moveRight();"></div>
+    <div id="btn-jump"  onclick="jump();">Jump</div>
+    <div id="btn-rotate-left" class="button" onclick="rotateLeft();"></div>
+    <div id="btn-rotate-right" class="button" onclick="rotateRight();"></div>
+</div>
+
+  </body>
+  <script>
+  function myFunction() {
+
+  }
+
+  function moveDown() {
+    console.log("Down");
+    var newNegZ = cube.object3D.position.z - 0.1;
+    var moveDownInterval = setInterval(function() {
+      if(cube.object3D.position.z >= newNegZ){
+      cube.object3D.position.z -= 0.005;
+    }else{
+      clearInterval(moveDownInterval);
+      return;
+    }
+    },10);
+    console.log(cube.object3D.position.z);
+  }
+
+  function moveUp() {
+    console.log("Down");
+    var newNegZ = cube.object3D.position.z + 0.1;
+    var moveDownInterval = setInterval(function() {
+      if(cube.object3D.position.z <= newNegZ){
+      cube.object3D.position.z += 0.005;
+    }else{
+      clearInterval(moveDownInterval);
+      return;
+    }
+    },10);
+    console.log(cube.object3D.position.z);
+  }
+
+  function moveLeft() {
+    console.log("Left");
+    var newNegX = cube.object3D.position.x - 0.1;
+    var moveLeftInterval = setInterval(function() {
+      if(cube.object3D.position.x >= newNegX){
+      cube.object3D.position.x -= 0.005;
+    }else{
+      clearInterval(moveLeftInterval);
+      return;
+    }
+    },10);
+    console.log(cube.object3D.position.x);
+  }
+
+  function moveRight() {
+    console.log("Right");
+    var newPosX = cube.object3D.position.x + 0.1;
+    var moveRightInterval = setInterval(function() {
+      if(cube.object3D.position.x <= newPosX){
+      cube.object3D.position.x += 0.005;
+    }else{
+      clearInterval(moveRightInterval);
+      return;
+    }
+    },10);
+  }
+
+  function jump() {
+    var START_POS = 0;
+    var speed = 0.5;
+    var GRAVITY = -0.3;
+
+    var pos = START_POS;
+
+    cube.object3D.position.y = START_POS;
+
+    var jumpTimer = setInterval(function(){
+
+      pos += speed;
+      speed += GRAVITY;
+
+      cube.object3D.position.y = pos;
+
+      if (cube.object3D.position.y < 0){
+
+        cube.object3D.position.y = START_POS;
+        clearInterval(jumpTimer);
+      }
+    }, 50);
+  }
+
+
+  function rotateLeft() {
+    cube.object3D.rotation.y += 90;
+  }
+
+  function rotateRight(){
+    cube.object3D.rotation.y -= 90;
+  }
+
+  </script>
+</html>

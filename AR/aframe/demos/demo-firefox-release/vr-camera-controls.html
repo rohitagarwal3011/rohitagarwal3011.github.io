@@ -1,0 +1,27 @@
+<!-- include a-frame -->
+<script src='../vendor/aframe/build/aframe.min.js'></script>
+<!-- include ar.js for aframe -->
+<script src='../../build/aframe-ar.js'></script>
+<script>ARjs.Context.baseURL = '../../../three.js/'</script>
+<!-- include shadowonly-plane -->
+<script src='src/aframe-shadow-plane.js'></script>
+
+<!-- start the body of your page -->
+<body style='margin : 0px; overflow: hidden;'>
+	<!-- add some info at the top of the page -->
+
+	<!-- Define your scene -->
+	<a-scene start id='scene' embedded arjs='trackingMethod: best;' antialias='true'>
+		<a-assets>
+			<a-asset-item id='tree-obj' src='https://poly.googleapis.com/downloads/dLHpzNdygsg/evs8gdhBtCG/Astronaut.obj'></a-asset-item>
+			<a-asset-item id='tree-mtl' src='https://poly.googleapis.com/downloads/dLHpzNdygsg/evs8gdhBtCG/Astronaut.mtl'></a-asset-item>
+		</a-assets>
+		<a-anchor hit-testing-enabled='true'>
+				<!-- firefox model -->
+				<a-entity obj-model='obj: #tree-obj; mtl: #tree-mtl' position='0 0.8 0' rotation='0 90 0' scale='1 1 1' shadow='receive: true'></a-entity>
+
+</a-anchor>
+		<a-camera-static/>
+		
+  </a-scene>
+</body>

@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>A-Frame Mouse Cursor Component - Embedded</title>
+    <script src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/aframe-0.7.1.min.js"></script>
+    <script src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/aframe-environments.min.js"></script>
+	<script src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/aframe-collision.js"></script>
+  <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+  <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+  <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
+
+  <style>
+
+    </style>
+  </head>
+  <body>
+
+    <a-scene embedded="true" cursor="fuse: false; rayOrigin: mouse">
+        <a-assets>
+          <a-asset-item id="drone" src="scene.gltf" crossorigin="anonymous"></a-asset-item>
+        </a-assets>
+      <a-anchor hit-testing-enabled='false' preset='hiro'>
+      <a-entity scale="0.3 0.3 0.3" >
+      <a-entity gltf-model="#drone" position="0 0 0" scale="0.01 0.01 0.01" onclick="myFunction()"  animation-mixer="clip: idle; loop:once;" src="#drone" id="bot" visible="true"></a-entity>
+      </a-entity>
+
+    </a-anchor>
+    <a-camera-static/>
+    </a-scene>
+
+    <script>
+    var isPlaying = false;
+    function myFunction() {
+      const bot = document.querySelector('#bot');
+      if(isPlaying){
+        bot.setAttribute("animation-mixer","clip: pause;loop:once;");
+        isPlaying = false;
+      }else{
+        bot.setAttribute("animation-mixer","clip: *;loop:once;");
+        isPlaying = true;
+      }
+
+    }
+    </script>
+  </body>
+</html>
