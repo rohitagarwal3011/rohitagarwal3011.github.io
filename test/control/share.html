@@ -32,9 +32,9 @@
     <button id="btn-zoom-in" class="button" onclick="zoomIn();">+</button>
     <button id="btn-zoom-out" class="button" onclick="zoomOut();">-</button>
     <button id="btn-up" class="button"></button>
-    <button id="btn-down" class="button" onclick="moveDown(1);" ></button>
-    <button id="btn-left" class="button" onclick="moveLeft(1);" ></button>
-    <button id="btn-right" class="button" onclick="moveRight(1);" ></button>
+    <button id="btn-down" class="button"></button>
+    <button id="btn-left" class="button"></button>
+    <button id="btn-right" class="button" ></button>
     <button id="btn-up2" class="button" onclick="moveUp(2);" ></button>
     <button id="btn-down2" class="button" onclick="moveDown(2);" ></button>
     <button id="btn-left2" class="button" onclick="moveLeft(2);" ></button>
@@ -62,20 +62,45 @@
     up.addEventListener('touchend',function(evt){
       upKey = false;
     });
+    down.addEventListener('touchstart',function(evt){
+      downKey = true;
+    });
+    downKey.addEventListener('touchend',function(evt){
+      downKey = false;
+    });
+    left.addEventListener('touchstart',function(evt){
+      leftKey = true;
+    });
+    left.addEventListener('touchend',function(evt){
+      leftKey = false;
+    });
+    right.addEventListener('touchstart',function(evt){
+      rightKey = true;
+    });
+    right.addEventListener('touchend',function(evt){
+      rightKey = false;
+    });
+
     setInterval(function(){
       if(upKey){
-        cube.object3D.y += .01;
-        j+=0.01;
+        cube.object3D.y -= .01;
+        j-=0.01;
         firebase.database().ref().child('y1').set(j);
       }
       if(downKey){
-        
+         cube.object3D.y += .01;
+        j+=0.01;
+        firebase.database().ref().child('y1').set(j);
       }
       if(leftKey){
-        
+        cube.object3D.x -= .01;
+        i-= .01;
+        firebase.database().ref().child('x1').set(i);
       }
       if(rightKey){
-
+        cube.object3D.x += .01;
+        i+= .01;
+        firebase.database().ref().child('x1').set(i);
       }
     },10);
   document.getElementById('scene').addEventListener('loaded',function(evt){
