@@ -81,6 +81,44 @@
       rightKey = false;
     });
 
+
+    var up2 = document.getElementById('btn-up2');
+    var down2 = document.getElementById('btn-down2');
+    var left2 = document.getElementById('btn-left2');
+    var right2 = document.getElementById('btn-right2');
+    var cube2 = document.getElementById('cube1');
+    var upKey2 =false;
+    var downKey2 =false;
+    var leftKey2 =false;
+    var rightKey2 =false;
+    up2.addEventListener('touchstart',function(evt){
+      upKey2 = true;
+    });
+    up2.addEventListener('touchend',function(evt){
+      upKey2 = false;
+    });
+    down2.addEventListener('touchstart',function(evt){
+      downKey2 = true;
+    });
+    down2.addEventListener('touchend',function(evt){
+      downKey2 = false;
+    });
+    left2.addEventListener('touchstart',function(evt){
+      leftKey2 = true;
+    });
+    left2.addEventListener('touchend',function(evt){
+      leftKey2 = false;
+    });
+    right2.addEventListener('touchstart',function(evt){
+      rightKey2 = true;
+    });
+    right2.addEventListener('touchend',function(evt){
+      rightKey2 = false;
+    });
+
+
+
+
     setInterval(function(){
       if(upKey){
         cube.object3D.y -= .01;
@@ -102,6 +140,28 @@
         i+= .01;
         firebase.database().ref().child('x1').set(i);
       }
+
+      if(upKey2){
+        cube2.object3D.y -= .01;
+        l-=0.01;
+        firebase.database().ref().child('y2').set(l);
+      }
+      if(downKey2){
+         cube2.object3D.y += .01;
+        l+=0.01;
+        firebase.database().ref().child('y2').set(l);
+      }
+      if(leftKey2){
+        cube2.object3D.x -= .01;
+        k-= .01;
+        firebase.database().ref().child('x2').set(k);
+      }
+      if(rightKey2){
+        cube2.object3D.x += .01;
+        k+= .01;
+        firebase.database().ref().child('x2').set(k);
+      }
+
     },10);
   document.getElementById('scene').addEventListener('loaded',function(evt){
 
