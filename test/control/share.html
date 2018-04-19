@@ -31,28 +31,57 @@
 <div id="container">
     <button id="btn-zoom-in" class="button" onclick="zoomIn();">+</button>
     <button id="btn-zoom-out" class="button" onclick="zoomOut();">-</button>
-    <button id="btn-up" class="button" onclick="moveUp(1);" ></button>
+    <button id="btn-up" class="button"></button>
     <button id="btn-down" class="button" onclick="moveDown(1);" ></button>
     <button id="btn-left" class="button" onclick="moveLeft(1);" ></button>
     <button id="btn-right" class="button" onclick="moveRight(1);" ></button>
-
     <button id="btn-up2" class="button" onclick="moveUp(2);" ></button>
     <button id="btn-down2" class="button" onclick="moveDown(2);" ></button>
     <button id="btn-left2" class="button" onclick="moveLeft(2);" ></button>
     <button id="btn-right2" class="button" onclick="moveRight(2);" ></button>
-
     <button id="btn-jump"  onclick="jump();"><span>Jump</span></button>
     <button id="btn-rotate-left" class="button" onmousedown="continuosRotateLeft();" ontouchstart="continuosRotateLeft();" onmouseup="continuosRotateLeftStop();" ontouchend="continuosRotateLeftStop();"></button>
     <button id="btn-rotate-right" class="button" onmousedown="continuosRotateRight();" ontouchstart="continuosRotateRight();" onmouseup="continuosRotateRightStop();" ontouchend="continuosRotateRightStop();"></button>
 </div>
-
   </body>
 
   <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
   <script>
+    var up = document.getElementById('btn-up');
+    var down = document.getElementById('btn-down');
+    var left = document.getElementById('btn-left');
+    var right = document.getElementById('btn-right');
+    var cube = document.getElementById('cube');
+    var upKey =false;
+    var downKey =false;
+    var leftKey =false;
+    var rightKey =false;
+    up.addEventListener('touchstart',function(evt){
+      upKey = true;
+    });
+    up.addEventListener('touchend',function(evt){
+      upKey = false;
+    });
+    setInterval(function(){
+      if(upKey){
+        cube.object3D.y += .01;
+        j+=0.01;
+        firebase.database().ref().child('y1').set(j);
+      }
+      if(downKey){
+        
+      }
+      if(leftKey){
+        
+      }
+      if(rightKey){
+
+      }
+    },10);
   document.getElementById('scene').addEventListener('loaded',function(evt){
+
     document.getElementById('cube').addEventListener('hitclosest',function(e){
-      // console.log('collision detected!');
+       
        alert("Game over");
 
     });
