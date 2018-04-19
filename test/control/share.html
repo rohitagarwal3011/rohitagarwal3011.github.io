@@ -121,6 +121,7 @@
     });
 
 
+    var gameover=false;
 
 
     setInterval(function(){
@@ -166,14 +167,23 @@
         firebase.database().ref().child('x2').set(k);
       }
 
+      if(gameover){
+        alert("Game over");
+        init();
+        setallfalse();
+      }
+
+
+
     },10);
   document.getElementById('scene').addEventListener('loaded',function(evt){
 
     document.getElementById('cube').addEventListener('hitclosest',function(e){
        
-       alert("Game over");
-       init();
-       setallfalse();
+       //alert("Game over");
+       dbGameOverRef.set(true);
+       
+       
 
     });
   });
@@ -191,12 +201,14 @@
   var dbUpRef = firebase.database().ref().child('y1');
   var dbLeftRef2 = firebase.database().ref().child('x2');
   var dbUpRef2 = firebase.database().ref().child('y2');
+  var dbGameOverRef = firebase.database().ref().child('gameover');
 
   function init(){
     firebase.database().ref().child('x1').set(0.5);
     firebase.database().ref().child('y1').set(0);
     firebase.database().ref().child('x2').set(-0.5);
     firebase.database().ref().child('y2').set(0);
+    gameover=false;
 
   }
 
@@ -237,6 +249,11 @@
     var marginDown =  snap.val();
     l = marginDown;
     cube1.object3D.position.z = marginDown;
+  });
+
+  dbGameOverRef.on('value',snap => {
+    gameover = snap.val();
+
   });
 
   function moveRight(p){
