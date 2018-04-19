@@ -35,10 +35,10 @@
     <button id="btn-down" class="button"></button>
     <button id="btn-left" class="button"></button>
     <button id="btn-right" class="button" ></button>
-    <button id="btn-up2" class="button" onclick="moveUp(2);" ></button>
-    <button id="btn-down2" class="button" onclick="moveDown(2);" ></button>
-    <button id="btn-left2" class="button" onclick="moveLeft(2);" ></button>
-    <button id="btn-right2" class="button" onclick="moveRight(2);" ></button>
+    <button id="btn-up2" class="button" ></button>
+    <button id="btn-down2" class="button" ></button>
+    <button id="btn-left2" class="button"></button>
+    <button id="btn-right2" class="button"></button>
     <button id="btn-jump"  onclick="jump();"><span>Jump</span></button>
     <button id="btn-rotate-left" class="button" onmousedown="continuosRotateLeft();" ontouchstart="continuosRotateLeft();" onmouseup="continuosRotateLeftStop();" ontouchend="continuosRotateLeftStop();"></button>
     <button id="btn-rotate-right" class="button" onmousedown="continuosRotateRight();" ontouchstart="continuosRotateRight();" onmouseup="continuosRotateRightStop();" ontouchend="continuosRotateRightStop();"></button>
@@ -168,6 +168,8 @@
     document.getElementById('cube').addEventListener('hitclosest',function(e){
        
        alert("Game over");
+       init();
+       setallfalse();
 
     });
   });
@@ -192,6 +194,18 @@
     firebase.database().ref().child('x2').set(-0.5);
     firebase.database().ref().child('y2').set(0);
 
+  }
+
+  function setallfalse()
+  {
+    upkey=false;
+    downkey=false;
+    rightKey=false;
+    leftKey=false;
+    upKey2=false;
+    downKey2=false;
+    rightKey2=false;
+    leftKey2=false;
   }
 
 
