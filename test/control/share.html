@@ -53,7 +53,7 @@
   document.getElementById('scene').addEventListener('loaded',function(evt){
     document.getElementById('cube').addEventListener('hitclosest',function(e){
       // console.log('collision detected!');
-      // alert("Game over");
+       alert("Game over");
 
     });
   });
@@ -73,9 +73,9 @@
   var dbUpRef2 = firebase.database().ref().child('y2');
 
   function init(){
-    firebase.database().ref().child('x1').set(0.01);
+    firebase.database().ref().child('x1').set(0.5);
     firebase.database().ref().child('y1').set(0);
-    firebase.database().ref().child('x2').set(-0.01);
+    firebase.database().ref().child('x2').set(-0.5);
     firebase.database().ref().child('y2').set(0);
 
   }
