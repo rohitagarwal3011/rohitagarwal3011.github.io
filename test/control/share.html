@@ -21,11 +21,18 @@
         <a-asset-item id='cat-obj' src='cat/Mesh_Cat.obj'></a-asset-item>
         <a-asset-item id='cat-mtl' src='cat/Mesh_Cat.mtl'></a-asset-item>
       </a-assets>
+
+      <a-assets>
+        <a-asset-item id='rat-obj' src='mouse/Mesh_Rat.obj'></a-asset-item>
+        <a-asset-item id='rat-mtl' src='mouse/Mesh_Rat.mtl'></a-asset-item>
+      </a-assets>
+
       <a-anchor hit-testing-enabled='false' preset='custom' type='pattern' url='logo-ar.patt' >
         <a-entity id="myscene">
         <a-obj-model id="cube" aabb-collider="objects:.col" position="1 0 0" src="#cat-obj" mtl="#cat-mtl"  scale="0.3 0.3 0.3" rotation="0 0 0" visible="true"></a-obj-model>
        <!-- <a-box id="cube" aabb-collider="objects:.col" position="1 0 0" color="red" scale="0.1 0.1 0.1" rotation="0 0 0"  visible="true"></a-box>-->
-        <a-box id="cube1" class="col" position="0 0 0" color="skyblue" scale="0.1 0.1 0.1" rotation="0 0 0"  visible="true"></a-box>
+        <!--<a-box id="cube1" class="col" position="0 0 0" color="skyblue" scale="0.1 0.1 0.1" rotation="0 0 0"  visible="true"></a-box>-->
+        <a-obj-model id="cube1" aabb-collider="objects:.col" position="0 0 0" src="#rat-obj" mtl="#rat-mtl"  scale="0.3 0.3 0.3" rotation="0 0 0" visible="true"></a-obj-model>
         </a-entity>
       </a-anchor>
       <a-camera-static/>
