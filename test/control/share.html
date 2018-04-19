@@ -181,7 +181,7 @@
     document.getElementById('cube').addEventListener('hitclosest',function(e){
        
        //alert("Game over");
-       dbGameOverRef.set(true);
+       firebase.database().ref().child('gameover')set(true);
        
        
 
@@ -208,7 +208,7 @@
     firebase.database().ref().child('y1').set(0);
     firebase.database().ref().child('x2').set(-0.5);
     firebase.database().ref().child('y2').set(0);
-    dbGameOverRef.set(false);
+    firebase.database().ref().child('gameover').set(false);
 
   }
 
