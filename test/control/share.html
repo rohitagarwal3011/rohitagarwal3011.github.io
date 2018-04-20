@@ -24,13 +24,13 @@
       </a-assets>
 
       <a-assets>
-        <a-asset-item id='rat-obj' src='mouse/Mesh_Rat.obj'></a-asset-item>
-        <a-asset-item id='rat-mtl' src='mouse/Mesh_Rat.mtl'></a-asset-item>
+        <a-asset-item id='rat-obj' src='car/car_02.obj'></a-asset-item>
+        <a-asset-item id='rat-mtl' src='car/car_02.obj'></a-asset-item>
       </a-assets>
 
       <a-anchor hit-testing-enabled='false' preset='custom' type='pattern' url='logo-ar.patt' >
         <a-entity id="myscene">
-        <a-obj-model id="cube" aabb-collider="objects:.col" position="1 0 0" src="#cat-obj" mtl="#cat-mtl"  scale="0.3 0.3 0.3" rotation="0 225 0" visible="true"></a-obj-model>
+        <a-obj-model id="cube" aabb-collider="objects:.col" position="1 0 0" src="#rat-obj" mtl="#rat-mtl"  scale="0.001 0.001 0.001" rotation="0 225 0" visible="true"></a-obj-model>
        <!-- <a-box id="cube" aabb-collider="objects:.col" position="1 0 0" color="red" scale="0.1 0.1 0.1" rotation="0 0 0"  visible="true"></a-box>-->
         <!--<a-box id="cube1" class="col" position="0 0 0" color="skyblue" scale="0.1 0.1 0.1" rotation="0 0 0"  visible="true"></a-box>-->
         <a-obj-model id="cube1" class="col" position="0 0 0" src="#cat-obj" mtl="#cat-mtl"  scale="0.3 0.3 0.3" rotation="0 30 0" visible="true"></a-obj-model>
