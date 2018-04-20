@@ -24,16 +24,16 @@
       </a-assets>
 
       <a-assets>
-        <a-asset-item id='rat-obj' src='car/car_02.obj'></a-asset-item>
-        <a-asset-item id='rat-mtl' src='car/car_02.obj'></a-asset-item>
+        <a-asset-item id='rat-obj' src='mouse/Mesh_Rat.obj'></a-asset-item>
+        <a-asset-item id='rat-mtl' src='mouse/Mesh_Rat.mtl'></a-asset-item>
       </a-assets>
 
       <a-anchor hit-testing-enabled='false' preset='custom' type='pattern' url='logo-ar.patt' >
         <a-entity id="myscene">
-        <a-gltf-model id="cube" aabb-collider="objects:.col" position="1 0 0" src="https://vrassets-pa.googleusercontent.com/downloads/bTcqWpYqeeM/cwFT0_8lcRm/car_02.gltf"  scale="0.002 0.002 0.002" rotation="0 0 0" visible="true"></a-gltf-model>
+        <a-obj-model id="cube" aabb-collider="objects:.col" position="1 0 0" src="#cat-obj" mtl="#cat-mtl"  scale="0.3 0.3 0.3" rotation="0 225 0" visible="true"></a-obj-model>
        <!-- <a-box id="cube" aabb-collider="objects:.col" position="1 0 0" color="red" scale="0.1 0.1 0.1" rotation="0 0 0"  visible="true"></a-box>-->
         <!--<a-box id="cube1" class="col" position="0 0 0" color="skyblue" scale="0.1 0.1 0.1" rotation="0 0 0"  visible="true"></a-box>-->
-        <a-obj-model id="cube1" class="col" position="0 0 0" src="#cat-obj" mtl="#cat-mtl"  scale="0.3 0.3 0.3" rotation="0 30 0" visible="false"></a-obj-model>
+        <a-obj-model id="cube1" class="col" position="0 0 0" src="#cat-obj" mtl="#cat-mtl"  scale="0.3 0.3 0.3" rotation="0 30 0" visible="true"></a-obj-model>
         </a-entity>
       </a-anchor>
       <a-camera-static/>
@@ -41,16 +41,16 @@
     </a-scene>
 
 <div id="container">
-    <button id="btn-zoom-in" class="button hidebtn" onclick="zoomIn();">+</button>
-    <button id="btn-zoom-out" class="button hidebtn" onclick="zoomOut();">-</button>
+    <button id="btn-zoom-in" class="button" onclick="zoomIn();">+</button>
+    <button id="btn-zoom-out" class="button" onclick="zoomOut();">-</button>
     <button id="btn-up" class="button"></button>
     <button id="btn-down" class="button"></button>
     <button id="btn-left" class="button"></button>
     <button id="btn-right" class="button" ></button>
-    <button id="btn-up2" class="button hidebtn" ></button>
-    <button id="btn-down2" class="button hidebtn" ></button>
-    <button id="btn-left2" class="button hidebtn"></button>
-    <button id="btn-right2" class="button hidebtn"></button>
+    <button id="btn-up2" class="button" ></button>
+    <button id="btn-down2" class="button" ></button>
+    <button id="btn-left2" class="button"></button>
+    <button id="btn-right2" class="button"></button>
     <button id="btn-jump"  onclick="jump();"><span>Jump</span></button>
     <button id="btn-rotate-left" class="button" onmousedown="continuosRotateLeft();" ontouchstart="continuosRotateLeft();" onmouseup="continuosRotateLeftStop();" ontouchend="continuosRotateLeftStop();"></button>
     <button id="btn-rotate-right" class="button" onmousedown="continuosRotateRight();" ontouchstart="continuosRotateRight();" onmouseup="continuosRotateRightStop();" ontouchend="continuosRotateRightStop();"></button>
@@ -135,25 +135,25 @@
 
     setInterval(function(){
       if(upKey){
-        cube.setAttribute("rotation","0 270 0");
+        cube.setAttribute("rotation","0 120 0");
         cube.object3D.y -= .01;
         j-=0.01;
         firebase.database().ref().child('y1').set(j);
       }
       if(downKey){
-         cube.setAttribute("rotation","0 90 0");
+         cube.setAttribute("rotation","0 300 0");
          cube.object3D.y += .01;
         j+=0.01;
         firebase.database().ref().child('y1').set(j);
       }
       if(leftKey){
-         cube.setAttribute("rotation","0 0 0");
+         cube.setAttribute("rotation","0 225 0");
         cube.object3D.x -= .01;
         i-= .01;
         firebase.database().ref().child('x1').set(i);
       }
       if(rightKey){
-         cube.setAttribute("rotation","0 180 0");
+         cube.setAttribute("rotation","0 30 0");
         cube.object3D.x += .01;
         i+= .01;
         firebase.database().ref().child('x1').set(i);
@@ -178,7 +178,6 @@
         firebase.database().ref().child('x2').set(k);
       }
       if(rightKey2){
-        cube2.setAttribute("rotation","0 30 0");
         cube2.object3D.x += .01;
         k+= .01;
         firebase.database().ref().child('x2').set(k);
