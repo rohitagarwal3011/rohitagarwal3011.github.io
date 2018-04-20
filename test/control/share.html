@@ -135,19 +135,19 @@
 
     setInterval(function(){
       if(upKey){
-        cube.setAttribute("rotation","0 165 0");
+        cube.setAttribute("rotation","0 150 0");
         cube.object3D.y -= .01;
         j-=0.01;
         firebase.database().ref().child('y1').set(j);
       }
       if(downKey){
-         cube.setAttribute("rotation","0 345 0");
+         cube.setAttribute("rotation","0 330 0");
          cube.object3D.y += .01;
         j+=0.01;
         firebase.database().ref().child('y1').set(j);
       }
       if(leftKey){
-         cube.setAttribute("rotation","0 255 0");
+         cube.setAttribute("rotation","0 240 0");
         cube.object3D.x -= .01;
         i-= .01;
         firebase.database().ref().child('x1').set(i);
