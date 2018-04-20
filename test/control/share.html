@@ -135,13 +135,13 @@
 
     setInterval(function(){
       if(upKey){
-        cube.setAttribute("rotation","0 135 0");
+        cube.setAttribute("rotation","0 125 0");
         cube.object3D.y -= .01;
         j-=0.01;
         firebase.database().ref().child('y1').set(j);
       }
       if(downKey){
-         cube.setAttribute("rotation","0 315 0");
+         cube.setAttribute("rotation","0 305 0");
          cube.object3D.y += .01;
         j+=0.01;
         firebase.database().ref().child('y1').set(j);
