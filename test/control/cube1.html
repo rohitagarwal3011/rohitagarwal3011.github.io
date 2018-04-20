@@ -16,12 +16,12 @@
 
     <a-scene cursor="fuse: false; rayOrigin: mouse" embedded="true" width="100%" height="100%">
       <a-assets>
-        <a-asset-item id='cat-obj' src='cat/Mesh_Cat.obj'></a-asset-item>
-        <a-asset-item id='cat-mtl' src='cat/Mesh_Cat.mtl'></a-asset-item>
+        <a-asset-item id='car-obj' src='car/car_02.obj'></a-asset-item>
+        <a-asset-item id='car-mtl' src='car/car_02.mtl'></a-asset-item>
       </a-assets>
       <a-anchor hit-testing-enabled='false' preset='custom' type='pattern' url='logo-ar.patt' >
         <a-entity id="myscene">
-        <a-obj-model id="cube" position="0 0 0" src="#cat-obj" mtl="#cat-mtl"  scale="3 3 3" rotation="0 0 0" onclick="myFunction();" visible="true">
+        <a-obj-model id="cube" position="0 0 0" src="#car-obj" mtl="#car-mtl"  scale="3 3 3" rotation="0 0 0" onclick="myFunction();" visible="true">
         </a-entity>
       </a-anchor>
       <a-camera-static/>
