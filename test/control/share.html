@@ -160,25 +160,25 @@
       }
 
       if(upKey2){
-        cube2.setAttribute("rotation","0 120 0");
+        cube2.setAttribute("rotation","0 0 0");
         cube2.object3D.y -= .01;
         l-=0.01;
         firebase.database().ref().child('y2').set(l);
       }
       if(downKey2){
-        cube2.setAttribute("rotation","0 300 0");
+        cube2.setAttribute("rotation","0 180 0");
          cube2.object3D.y += .01;
         l+=0.01;
         firebase.database().ref().child('y2').set(l);
       }
       if(leftKey2){
-        cube2.setAttribute("rotation","0 225 0");
+        cube2.setAttribute("rotation","0 270 0");
         cube2.object3D.x -= .01;
         k-= .01;
         firebase.database().ref().child('x2').set(k);
       }
       if(rightKey2){
-        cube2.setAttribute("rotation","0 30 0");
+        cube2.setAttribute("rotation","0 90 0");
         cube2.object3D.x += .01;
         k+= .01;
         firebase.database().ref().child('x2').set(k);
