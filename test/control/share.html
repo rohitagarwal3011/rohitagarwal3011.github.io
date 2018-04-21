@@ -41,16 +41,16 @@
     </a-scene>
 
 <div id="container">
-    <button id="btn-zoom-in" class="button" onclick="zoomIn();">+</button>
-    <button id="btn-zoom-out" class="button" onclick="zoomOut();">-</button>
-    <button id="btn-up" class="button"></button>
-    <button id="btn-down" class="button"></button>
-    <button id="btn-left" class="button"></button>
-    <button id="btn-right" class="button" ></button>
-    <button id="btn-up2" class="button" ></button>
-    <button id="btn-down2" class="button" ></button>
-    <button id="btn-left2" class="button"></button>
-    <button id="btn-right2" class="button"></button>
+    <button id="btn-zoom-in" class="button hidebtn" onclick="zoomIn();">+</button>
+    <button id="btn-zoom-out" class="button hidebtn" onclick="zoomOut();">-</button>
+    <button id="btn-up" class="button hidebtn"></button>
+    <button id="btn-down" class="button hidebtn"></button>
+    <button id="btn-left" class="button hidebtn"></button>
+    <button id="btn-right" class="button hidebtn" ></button>
+    <button id="btn-up2" class="button hidebtn" ></button>
+    <button id="btn-down2" class="button hidebtn" ></button>
+    <button id="btn-left2" class="button hidebtn"></button>
+    <button id="btn-right2" class="button hidebtn"></button>
     <button id="btn-jump"  onclick="jump();"><span>Jump</span></button>
     <button id="btn-rotate-left" class="button" onmousedown="continuosRotateLeft();" ontouchstart="continuosRotateLeft();" onmouseup="continuosRotateLeftStop();" ontouchend="continuosRotateLeftStop();"></button>
     <button id="btn-rotate-right" class="button" onmousedown="continuosRotateRight();" ontouchstart="continuosRotateRight();" onmouseup="continuosRotateRightStop();" ontouchend="continuosRotateRightStop();"></button>
@@ -178,6 +178,7 @@
         firebase.database().ref().child('x2').set(k);
       }
       if(rightKey2){
+        cube2.setAttribute("rotation","0 30 0");
         cube2.object3D.x += .01;
         k+= .01;
         firebase.database().ref().child('x2').set(k);
@@ -228,6 +229,7 @@
 
   }
 
+//Keys for 1st player
   function setUpKeyTrue()
   {
     upKey=true;
@@ -268,6 +270,47 @@
     leftKey = false;
   }
 
+
+//Keys for 2nd player
+function setUpKey2True()
+  {
+    upKey2=true;
+  }
+
+  function setUpKey2False()
+  {
+    upKey2 = false;
+  }
+
+  function setDownKey2True()
+  {
+    downKey2=true;
+  }
+
+  function setDownKey2False()
+  {
+    downKey2 = false;
+  }
+
+  function setRightKey2True()
+  {
+    rightKey2=true;
+  }
+
+  function setRightKey2False()
+  {
+    rightKey2 = false;
+  }
+
+  function setLeftKey2True()
+  {
+    leftKey2=true;
+  }
+
+  function setLeftKey2False()
+  {
+    leftKey2 = false;
+  }
 
 
 
