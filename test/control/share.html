@@ -30,10 +30,11 @@
 
       <a-anchor hit-testing-enabled='false' preset='custom' type='pattern' url='logo-ar.patt' >
         <a-entity id="myscene">
+          <a-gltf-model id="cube1" aabb-collider="objects:.col" position="1 0 0" src="https://vrassets-pa.googleusercontent.com/downloads/6hsesZHvcPI/5Ty0-yFJjT9/Mesh_Rat.gltf" scale="0.3 0.3 0.3" rotation="0 225 0" visible="true"></a-gltf-model>
         <a-obj-model id="cube" aabb-collider="objects:.col" position="1 0 0" src="#cat-obj" mtl="#cat-mtl"  scale="0.3 0.3 0.3" rotation="0 225 0" visible="true"></a-obj-model>
        <!-- <a-box id="cube" aabb-collider="objects:.col" position="1 0 0" color="red" scale="0.1 0.1 0.1" rotation="0 0 0"  visible="true"></a-box>-->
         <!--<a-box id="cube1" class="col" position="0 0 0" color="skyblue" scale="0.1 0.1 0.1" rotation="0 0 0"  visible="true"></a-box>-->
-        <a-obj-model id="cube1" class="col" position="0 0 0" src="#cat-obj" mtl="#cat-mtl"  scale="0.3 0.3 0.3" rotation="0 30 0" visible="true"></a-obj-model>
+       <!-- <a-obj-model id="cube1" class="col" position="0 0 0" src="#cat-obj" mtl="#cat-mtl"  scale="0.3 0.3 0.3" rotation="0 30 0" visible="true"></a-obj-model>-->
         </a-entity>
       </a-anchor>
       <a-camera-static/>
@@ -184,12 +185,6 @@
         firebase.database().ref().child('x2').set(k);
       }
 
-      if(gameover){
-        window.JSInterface.startVideo();
-        init();
-        setallfalse();
-      }
-
 
 
     },10);
@@ -198,7 +193,10 @@
     document.getElementById('cube').addEventListener('hitclosest',function(e){
        
        //alert("Game over");
-       firebase.database().ref().child('gameover').set(true);
+       //firebase.database().ref().child('gameover').set(true);
+        window.JSInterface.startVideo();
+        init();
+        setallfalse();
        
        
 
@@ -225,7 +223,6 @@
     firebase.database().ref().child('y1').set(0);
     firebase.database().ref().child('x2').set(-0.5);
     firebase.database().ref().child('y2').set(0);
-    firebase.database().ref().child('gameover').set(false);
 
   }
 
@@ -354,10 +351,10 @@ function setUpKey2True()
     cube1.object3D.position.z = marginDown;
   });
 
-  dbGameOverRef.on('value',snap => {
-    gameover = snap.val();
+  // dbGameOverRef.on('value',snap => {
+  //   gameover = snap.val();
 
-  });
+  // });
 
   function moveRight(p){
     console.log(p);
