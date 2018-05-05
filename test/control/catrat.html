@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+    <title>A-Frame Mouse Cursor Component - Basic</title>
+
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <!--<script src="https://s3.ap-south-1.amazonaws.com/hatchvr/hatchvr-public-assets/aframe-0.7.1.min.js"></script>-->
+    <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-aabb-collider-component/dist/aframe-aabb-collider-component.min.js"></script>
+    <script src="aframe-ar.js"></script>
+
+    <link rel="stylesheet" href="css/style1.css">
+
+
+  </head>
+  <body onload="init();">
+
+    <a-scene id='scene' cursor="fuse: false; rayOrigin: mouse" embedded="true" width="100%" height="100%">
+      <a-assets>
+        <a-asset-item id='cat-obj' src='cat/Mesh_Cat.obj'></a-asset-item>
+        <a-asset-item id='cat-mtl' src='cat/Mesh_Cat.mtl'></a-asset-item>
+      </a-assets>
+
+      <a-assets>
+        <a-asset-item id='rat-obj' src='mouse/Mesh_Rat.obj'></a-asset-item>
+        <a-asset-item id='rat-mtl' src='mouse/Mesh_Rat.mtl'></a-asset-item>
+      </a-assets>
+
+      <a-anchor hit-testing-enabled='false' preset='custom' type='pattern' url='logo-ar.patt' >
+<!-- cat -->
+        <a-obj-model id="cube1" aabb-collider="objects:.col" position="0.5 0 0" src="#cat-obj" mtl="#cat-mtl"  scale="0.4 0.4 0.4" rotation="0 225 0" visible="true"></a-obj-model>
+<!-- rat -->
+        <a-gltf-model id="cube" class="col" position="-0.5 0 0" src="https://vrassets-pa.googleusercontent.com/downloads/6hsesZHvcPI/5Ty0-yFJjT9/Mesh_Rat.gltf" scale="0.002 0.002 0.002" rotation="0 0 0" visible="true"></a-gltf-model>
+        <a-box id="wall1" position="1 0 0" rotation="0 90 0" scale="2 0.05 0.05"  ></a-box>
+        <a-box id="wall2" position="-1 0 0" rotation="0 90 0" scale="2 0.05 0.05"  ></a-box>
+        <a-box id="wall3" position="0 0 -1" rotation="0 0 0" scale="2 0.05 0.05"  ></a-box>
+        <a-box id="wall4" position="0 0 1" rotation="0 0 0" scale="2 0.05 0.05"  ></a-box>
+
+        <!-- <a-plane height="3" width="3" position="0 -0.5 0" rotation="-90 0 0" color="skyblue"></a-plane> -->
+
+        </a-entity>
+      </a-anchor>
+      <a-camera-static/>
+
+    </a-scene>
+
+    <div id="container">
+        <button id="btn-zoom-in" class="button hidebtn" onclick="zoomIn();">+</button>
+        <button id="btn-zoom-out" class="button hidebtn" onclick="zoomOut();">-</button>
+        <button id="btn-up" class="button hidebtn"  onmousedown="setUpKeyTrue();" ontouchstart="setUpKeyTrue();" onmouseup="setUpKeyFalse();" ontouchend="setUpKeyFalse();"></button>
+        <button id="btn-down" class="button hidebtn" onmousedown="setDownKeyTrue();" onmouseup="setDownKeyFalse();" ontouchstart="setDownKeyTrue();" ontouchend="setDownKeyFalse();"></button>
+        <button id="btn-left" class="button hidebtn" onmousedown="setLeftKeyTrue();" onmouseup="setLeftKeyFalse();" ontouchstart="setLeftKeyTrue();" ontouchend="setLeftKeyFalse();"></button>
+        <button id="btn-right" class="button hidebtn" onmousedown="setRightKeyTrue();" onmouseup="setRightKeyFalse();" ontouchstart="setRightKeyTrue();" ontouchend="setRightKeyFalse();"></button>
+        <button id="btn-up2" class="button hidebtn" onmousedown="setUpKey2True();" onmouseup="setUpKey2False();" ></button>
+        <button id="btn-down2" class="button hidebtn" onmousedown="setDownKey2True();" onmouseup="setDownKey2False();" ></button>
+        <button id="btn-left2" class="button hidebtn" onmousedown="setLeftKey2True();" onmouseup="setLeftKey2False();" ></button>
+        <button id="btn-right2" class="button hidebtn" onmousedown="setRightKey2True();" onmouseup="setRightKey2False();" ></button>
+        <button id="btn-jump"  onclick="jump();"><span>Jump</span></button>
+        <button id="btn-rotate-left" class="button" onmousedown="continuosRotateLeft();" ontouchstart="continuosRotateLeft();" onmouseup="continuosRotateLeftStop();" ontouchend="continuosRotateLeftStop();"></button>
+        <button id="btn-rotate-right" class="button" onmousedown="continuosRotateRight();" ontouchstart="continuosRotateRight();" onmouseup="continuosRotateRightStop();" ontouchend="continuosRotateRightStop();"></button>
+    </div>
+  </body>
+
+  <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+  <script>
+    var score = 0;
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var c = url.searchParams.get("id");
+    var id = "0792b37a-8df7-4519-91ea-d4714d74a11a";
+    if(c != null){
+      id = c;
+    }else{
+    }
+    console.log(id);
+    var scene = document.getElementById('scene');
+    var up = document.getElementById('btn-up');
+    var down = document.getElementById('btn-down');
+    var left = document.getElementById('btn-left');
+    var right = document.getElementById('btn-right');
+    var cube = document.getElementById('cube');
+    var upKey =false;
+    var downKey =false;
+    var leftKey =false;
+    var rightKey =false;
+    var up2 = document.getElementById('btn-up2');
+    var down2 = document.getElementById('btn-down2');
+    var left2 = document.getElementById('btn-left2');
+    var right2 = document.getElementById('btn-right2');
+    var cube1 = document.getElementById('cube1');
+    var upKey2 =false;
+    var downKey2 =false;
+    var leftKey2 =false;
+    var rightKey2 =false;
+    var r1 = 0;
+    var gameover=false;
+    var timeleft = 60;
+    var timerPaused = true;
+    setInterval(function(){
+      if(upKey){
+          var x1 = i;
+          var y1 = j;
+          var m = Math.tan(r1 * Math.PI / 180);
+          if(r1 >= 45 && r1< 135){
+              j-=0.03;
+              i = x1 - (j - y1)/m;
+          }else if(r1 >= 135 && r1< 225){
+              i-=0.03;
+              j = y1 - m*(i-x1);
+          }else if(r1 >= 225 && r1< 315){
+            j+=0.03;
+            i = x1 - (j - y1)/m;
+          }else{
+            i+=0.03;
+            j = y1 - m*(i-x1);
+          }
+          firebase.database().ref().child('connect').child(id).child('x1').set(i);
+          firebase.database().ref().child('connect').child(id).child('y1').set(j);
+          console.log("Moving Up "+yi);
+      }
+      if(leftKey){
+          r1+=1;
+          if(r1>=360){
+            r1 = 0;
+          }
+          firebase.database().ref().child('connect').child(id).child('r1').set(r1);
+          console.log("Moving Left "+r1);
+      }
+      if(rightKey){
+        r1-=1;
+        if(r1<=0){
+          r1 = 360;
+        }
+          firebase.database().ref().child('connect').child(id).child('r1').set(r1);
+          console.log("Moving Right "+r1);
+      }
+      if(upKey2){
+        var x2 = k;
+        var y2 = l;
+        var m = Math.tan(r2 * Math.PI / 180);
+        if(r2 >= 45 && r2< 135){
+            l-=0.03;
+            k = x2 - (l - y2)/m;
+        }else if(r2 >= 135 && r2< 225){
+            k-=0.03;
+            l = y2 - m*(k-x2);
+        }else if(r2 >= 225 && r2< 315){
+          l+=0.03;
+          k = x2 - (l - y2)/m;
+        }else{
+          k+=0.03;
+          l = y2 - m*(k-x2);
+        }
+        firebase.database().ref().child('connect').child(id).child('x2').set(k);
+        firebase.database().ref().child('connect').child(id).child('y2').set(l);
+      }
+      if(leftKey2){
+          r2+=1;
+          if(r2>=360){
+            r2 = 0;
+          }
+          firebase.database().ref().child('connect').child(id).child('r2').set(r2);
+          console.log("Moving Left r2"+r2);
+      }
+      if(rightKey2){
+        r2-=1;
+        if(r2<=0){
+          r2 = 360;
+        }
+          firebase.database().ref().child('connect').child(id).child('r2').set(r2);
+          console.log("Moving Right "+r2);
+      }
+    },10);
+  document.getElementById('scene').addEventListener('loaded',function(evt){
+    console.log('Scene Loaded');
+    hideLoading();
+    document.getElementById('cube').addEventListener('hitclosest',function(e){
+      console.log("collision");
+       //alert("Game over");
+       //firebase.database().ref().child('connect').child(id).child('gameover').set(true);
+        // window.JSInterface.startVideo();
+        init();
+        collision();
+        setallfalse();
+    });
+  });
+  function hideLoading(){
+    window.JSInterface.hideLoader();
+  }
+  function collision(){
+    window.JSInterface.collision();
+  }
+  function setRotation(rotation){
+    firebase.database().ref().child('connect').child(id).child('r1').set(rotation);
+  }
+  function setRotation2(rotation){
+      firebase.database().ref().child('connect').child(id).child('r2').set(rotation);
+  }
+  var config = {
+    apiKey: "AIzaSyADqTypd0Umt1IOgznCVuHAagecdNXm6do",
+    authDomain: "firepush-d066d.firebaseapp.com",
+    databaseURL: "https://firepush-d066d.firebaseio.com",
+    projectId: "firepush-d066d",
+    storageBucket: "firepush-d066d.appspot.com",
+    messagingSenderId: "820501614455"
+  };
+  firebase.initializeApp(config);
+  var dbLeftRef = firebase.database().ref().child('connect').child(id).child('x1');
+  var dbUpRef = firebase.database().ref().child('connect').child(id).child('y1');
+  var dbLeftRef2 = firebase.database().ref().child('connect').child(id).child('x2');
+  var dbUpRef2 = firebase.database().ref().child('connect').child(id).child('y2');
+  var dbRotateRef = firebase.database().ref().child('connect').child(id).child('r1');
+  var dbRotateRef2 = firebase.database().ref().child('connect').child(id).child('r2');
+  var dbGameOverRef = firebase.database().ref().child('connect').child(id).child('gameover');
+  function init(){
+    firebase.database().ref().child('connect').child(id).child('x1').set(0.5);
+    firebase.database().ref().child('connect').child(id).child('y1').set(0);
+    firebase.database().ref().child('connect').child(id).child('x2').set(-0.5);
+    firebase.database().ref().child('connect').child(id).child('y2').set(0);
+    firebase.database().ref().child('connect').child(id).child('r1').set(0);
+    firebase.database().ref().child('connect').child(id).child('r2').set(0);
+  }
+//Keys for 1st player
+  function setUpKeyTrue()
+  {
+    upKey=true;
+  }
+  function setUpKeyFalse()
+  {
+    upKey = false;
+  }
+  function setDownKeyTrue()
+  {
+    downKey=true;
+  }
+  function setDownKeyFalse()
+  {
+    downKey = false;
+  }
+  function setRightKeyTrue()
+  {
+    rightKey=true;
+  }
+  function setRightKeyFalse()
+  {
+    rightKey = false;
+  }
+  function setLeftKeyTrue()
+  {
+    leftKey=true;
+  }
+  function setLeftKeyFalse()
+  {
+    leftKey = false;
+  }
+//Keys for 2nd player
+function setUpKey2True()
+  {
+    upKey2=true;
+  }
+  function setUpKey2False()
+  {
+    upKey2 = false;
+  }
+  function setDownKey2True()
+  {
+    downKey2=true;
+  }
+  function setDownKey2False()
+  {
+    downKey2 = false;
+  }
+  function setRightKey2True()
+  {
+    rightKey2=true;
+  }
+  function setRightKey2False()
+  {
+    rightKey2 = false;
+  }
+  function setLeftKey2True()
+  {
+    leftKey2=true;
+  }
+  function setLeftKey2False()
+  {
+    leftKey2 = false;
+  }
+  function setallfalse()
+  {
+    upkey=false;
+    downkey=false;
+    rightKey=false;
+    leftKey=false;
+    upKey2=false;
+    downKey2=false;
+    rightKey2=false;
+    leftKey2=false;
+  }
+  dbLeftRef.on('value',snap => {
+    var marginLeft =  snap.val();
+    i = marginLeft;
+    cube.object3D.position.x = marginLeft;
+  });
+  dbUpRef.on('value',snap => {
+    var marginDown =  snap.val();
+    j = marginDown;
+    cube.object3D.position.z = marginDown;
+  });
+  dbLeftRef2.on('value',snap => {
+    var marginLeft =  snap.val();
+    k = marginLeft;
+    cube1.object3D.position.x = marginLeft;
+  });
+  dbUpRef2.on('value',snap => {
+    var marginDown =  snap.val();
+    l = marginDown;
+    cube1.object3D.position.z = marginDown;
+  });
+  dbRotateRef.on('value',snap => {
+    var rotation = snap.val();
+    r1 = rotation;
+    rotation += 90;
+    cube.setAttribute("rotation","0 "+rotation+" 0");
+  });
+  dbRotateRef2.on('value',snap => {
+    var rotation = snap.val();
+    r2 = rotation;
+    rotation += 45;
+    cube1.setAttribute("rotation","0 "+rotation+" 0");
+  });
+  </script>
+</html>
